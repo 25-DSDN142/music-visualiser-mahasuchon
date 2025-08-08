@@ -5,18 +5,28 @@ let temp = 1;
 let tempb = 2;
 let sizeVal;
 let colourVal;
+let previousval = 1;
+let previousval2 = 1;
+let prev3 = 1;
+let prev4 = 1;
+let prev5 = 1;
+let prev6 = 1;
+
+let temparrayghost = []
+
 
 
 //width and height are a thing
 
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
-  background(0)
+  background(255)
   textFont('Verdana'); // please use CSS safe fonts
   //rectMode(CENTER)
   textSize(24);
 
   let sizeVal = map(drum,40,100,0,height/1.5)
   let sizeValB = map(bass,40,100,0,height/1.5)
+  let sizeValC = map(prev6,40,100,0,height/1.5)
 
   if (temp > sizeVal) {
    temp = temp - 5;
@@ -33,10 +43,16 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   fill(10,10,10)
   rect(width/8,700,80,(-1*sizeVal))
   rect(width/8*2,700,80,(-1*sizeValB))
+  rect(width/8*3,700,80,(-1*sizeValC))
   fill(255,0,0)
 
-  rect(width/8,(-1*temp)+700,80,50)
-  rect(width/8*2,(-1*tempb)+700,80,50)
+  rect(width/8,(-1*temp)+700,80,50);
+  rect(width/8*2,(-1*tempb)+700,80,50);
+
+
+  temparrayghost.push(bass);
+  prev6 = temparrayghost[(temparrayghost.length)-10];
+  
 }
 
 
