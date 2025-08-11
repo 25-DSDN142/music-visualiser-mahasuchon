@@ -11,6 +11,8 @@ let prev3 = 1;
 let prev4 = 1;
 let prev5 = 1;
 let prev6 = 1;
+let prev7 = 1;
+let prev8 = 1;
 
 let temparrayghost = []
 
@@ -27,6 +29,9 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   let sizeVal = map(drum,40,100,0,height/1.5)
   let sizeValB = map(bass,40,100,0,height/1.5)
   let sizeValC = map(prev6,40,100,0,height/1.5)
+  let sizeValD = map(prev7,40,100,0,height/1.5)
+  let sizeValE = map(prev8,40,100,0,height/1.5)
+
 
   if (temp > sizeVal) {
    temp = temp - 5;
@@ -40,18 +45,26 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
    tempb = sizeValB;
   }
   
-  fill(10,10,10)
-  rect(width/8,700,80,(-1*sizeVal))
-  rect(width/8*2,700,80,(-1*sizeValB))
-  rect(width/8*3,700,80,(-1*sizeValC))
-  fill(255,0,0)
 
-  rect(width/8,(-1*temp)+700,80,50);
-  rect(width/8*2,(-1*tempb)+700,80,50);
+  //normal loudness bars
+
+  fill(10,10,10)
+  //rect(width/8,700,80,(-1*sizeVal))
+  rect(width/8*2,700,80,(-1*sizeValB))
+  rect(width/8*2.5,700,80,(-1*sizeValC)*0.9) //ghost bar bass 1
+  rect(width/8*3,700,80,(-1*sizeValD)*0.8) //ghost bar bass 2
+  rect(width/8*3.5,700,80,(-1*sizeValE)*0.7) //ghost bar bass 2
+  
+  fill(255,0,0) //"peak" value
+
+  //rect(width/8,(-1*temp)+700,80,50);
+  //rect(width/8*2,(-1*tempb)+700,80,50);
 
 
   temparrayghost.push(bass);
-  prev6 = temparrayghost[(temparrayghost.length)-10];
+  prev6 = temparrayghost[(temparrayghost.length)-2];
+  prev7 = temparrayghost[(temparrayghost.length)-4];
+  prev8 = temparrayghost[(temparrayghost.length)-6];
   
 }
 
