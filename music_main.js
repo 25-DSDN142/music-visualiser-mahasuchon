@@ -42,13 +42,13 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
       //rect((width/8)*i*0.5,700,80,(ghostArray[(ghostArray.length)-i*2])+(i*5));
       line(
       (width/8)*i*0.5,
-      ghostArray[(ghostArray.length)-(i*2)]+500,
+      ghostArray[(ghostArray.length)-(i)]+500,
       (width/8)*(i/2)+width/16,
-      ghostArray[(ghostArray.length)-(i*2)]+500
+      ghostArray[(ghostArray.length)-(i)-1]+500
       )
 
       line()
-      console.log(ghostArray[(ghostArray.length)-(i*2)]+500)
+      console.log(ghostArray[(ghostArray.length)-(i)]+500)
    }
 
    ghostArray.push(remapBass)
