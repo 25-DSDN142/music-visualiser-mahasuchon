@@ -13,6 +13,10 @@ let prev5 = 1;
 let prev6 = 1;
 let prev7 = 1;
 let prev8 = 1;
+let prev9 = 1;
+let prev10 = 1;
+let prev11 = 1;
+
 
 let temparrayghost = []
 
@@ -27,10 +31,14 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   textSize(24);
 
   let sizeVal = map(drum,40,100,0,height/1.5)
-  let sizeValB = map(bass,40,100,0,height/1.5)
+  let sizeValB = map(drum,40,100,0,height/1.5)
   let sizeValC = map(prev6,40,100,0,height/1.5)
   let sizeValD = map(prev7,40,100,0,height/1.5)
   let sizeValE = map(prev8,40,100,0,height/1.5)
+  let sizeValF = map(prev9,40,100,0,height/1.5)
+  let sizeValG = map(prev10,40,100,0,height/1.5)
+  let sizeValH = map(prev11,40,100,0,height/1.5)
+
 
 
   if (temp > sizeVal) {
@@ -47,13 +55,24 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   
 
   //normal loudness bars
+  strokeWeight(0)
 
   fill(10,10,10)
   //rect(width/8,700,80,(-1*sizeVal))
   rect(width/8*2,700,80,(-1*sizeValB))
   rect(width/8*2.5,700,80,(-1*sizeValC)*0.9) //ghost bar bass 1
   rect(width/8*3,700,80,(-1*sizeValD)*0.8) //ghost bar bass 2
-  rect(width/8*3.5,700,80,(-1*sizeValE)*0.7) //ghost bar bass 2
+  rect(width/8*3.5,700,80,(-1*sizeValE)*0.7) //ghost bar bass 3
+  rect(width/8*4,700,80,(-1*sizeValF)*0.6) //ghost bar bass 4
+  rect(width/8*4.5,700,80,(-1*sizeValG)*0.5) //ghost bar bass 5
+  rect(width/8*5,700,80,(-1*sizeValH)*0.4) //ghost bar bass 6
+
+  strokeWeight(10)
+  color(255,0,0)
+
+  line(width/8*4.5,(-1*sizeValG)+800,width/8*5,(-1*sizeValH)+800)
+
+
   
   fill(255,0,0) //"peak" value
 
@@ -61,10 +80,14 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   //rect(width/8*2,(-1*tempb)+700,80,50);
 
 
-  temparrayghost.push(bass);
+  temparrayghost.push(drum);
   prev6 = temparrayghost[(temparrayghost.length)-2];
   prev7 = temparrayghost[(temparrayghost.length)-4];
   prev8 = temparrayghost[(temparrayghost.length)-6];
+  prev9 = temparrayghost[(temparrayghost.length)-8];
+  prev10 = temparrayghost[(temparrayghost.length)-10];
+  prev11 = temparrayghost[(temparrayghost.length)-12];
+
   
 }
 
