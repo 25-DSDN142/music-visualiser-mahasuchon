@@ -18,7 +18,7 @@ let prev10 = 1;
 let prev11 = 1;
 
 
-let temparrayghost = []
+let ghostArray = []
 
 
 
@@ -30,7 +30,25 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   //rectMode(CENTER)
   textSize(24);
 
-  let sizeVal = map(bass,40,100,0,height/1.5)
+   remapBass = map(bass,0,100,0,-500)
+   remapVocal = map(vocal,0,100,0,-100)
+   remapDrum = map(drum,0,100,0,-100)
+   remapOther = map(other,0,100,0,-100)
+   
+   
+   //rect(width/8, 700, 80, remapBass)
+
+   for (i=1;i<6;i++){
+      rect((width/8)*i,700,80,ghostArray[(ghostArray.length)-i*2]);
+   }
+
+   ghostArray.push(bass)
+   //prev6 = temparrayghost[(temparrayghost.length)-2];
+
+}        
+
+
+  /*let sizeVal = map(bass,40,100,0,height/1.5)
   let sizeValB = map(bass,40,100,0,height/1.5)
   let sizeValC = map(prev6,40,100,0,height/1.5)
   let sizeValD = map(prev7,40,100,0,height/1.5)
@@ -38,15 +56,6 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   let sizeValF = map(prev9,40,100,0,height/1.5)
   let sizeValG = map(prev10,40,100,0,height/1.5)
   let sizeValH = map(prev11,40,100,0,height/1.5)
-
-
-  for (let i=1; i < 6; i++){
-   let iStep = i;
-   fill(255,255,iStep*50);
-   strokeWeight(iStep*2);
-   ellipse(iStep*50,iStep*50,50,50)
-  }
-
 
   if (temp > sizeVal) {
    temp = temp - 5;
@@ -60,6 +69,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
    tempb = sizeValB;
   }
   
+
 
   //normal loudness bars
   strokeWeight(0)
@@ -107,6 +117,19 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+*/
 
   //temp = temp + 2
   //if (temp > height){
