@@ -18,46 +18,54 @@ let prev10 = 1;
 let prev11 = 1;
 
 
-let ghostArray = []
+let ghostArrayBass = []
+let ghostArrayDrum = []
+let ghostArrayOther = []
+let tSeconds;
+
 
 
 
 //width and height are a thing
 
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
-  background(255)
+  background(200)
   textFont('Verdana'); // please use CSS safe fonts
   //rectMode(CENTER)
   textSize(24);
 
-   remapBass = map(bass,0,100,0,-500)
+   remapBass = map(bass,50,100,0,-500)
    remapVocal = map(vocal,0,100,0,-100)
-   remapDrum = map(drum,0,100,0,-100)
-   remapOther = map(other,0,100,0,-100)
+   remapDrum = map(drum,50,100,0,-500)
+   remapOther = map(other,50,100,0,-500)
    
    
    //rect(width/8, 700, 80, remapBass)
-
+   tSeconds = round(counter/60,1)
+   text(tSeconds + " seconds elapsed", 50, 50)
    for (i=1;i<12;i++){
-      //rect((width/8)*i*0.5,700,80,(ghostArray[(ghostArray.length)-i*2])+(i*5));
-      line(
-      (width/8)*i*0.5,
-      ghostArray[(ghostArray.length)-(i)]+500,
-      (width/8)*(i/2)+width/16,
-      ghostArray[(ghostArray.length)-(i)-1]+500
-      )
+
+      rect((width/8)*i*0.5,700,80,Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5), 0));
+
+      line((width/8)*i*0.5,ghostArrayBass[(ghostArrayBass.length)-(i)]+500,(width/8)*(i/2)+width/16,ghostArrayBass[(ghostArrayBass.length)-(i)-1]+500)
+
+      //line((width/8)*i*0.5,ghostArrayOther[(ghostArrayOther.length)-(i)]+500,(width/8)*(i/2)+width/16,ghostArrayOther[(ghostArrayOther.length)-(i)-1]+500)
+
 
       line()
-      console.log(ghostArray[(ghostArray.length)-(i)]+500)
+      console.log(ghostArrayBass[(ghostArrayBass.length)-(i)]+500)
    }
 
-   ghostArray.push(remapBass)
-   //prev6 = temparrayghost[(temparrayghost.length)-2];
+   ghostArrayBass.push(remapBass)
+   ghostArrayDrum.push(remapDrum)
+   ghostArrayOther.push(remapOther)
+
+
 
 }        
 
 
-  /*let sizeVal = map(bass,40,100,0,height/1.5)
+  /*let sizeVal = map(bass,40,100,0,height/1.5) //ALL DEPRECATED CODE
   let sizeValB = map(bass,40,100,0,height/1.5)
   let sizeValC = map(prev6,40,100,0,height/1.5)
   let sizeValD = map(prev7,40,100,0,height/1.5)
