@@ -41,8 +41,16 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
    
    
    //rect(width/8, 700, 80, remapBass)
-   tSeconds = round(counter/60,1)
+   tSeconds = round(counter/60,5)
    text(tSeconds + " seconds elapsed", 50, 50)
+   if (tSeconds < 15){
+      text("scene 1", 50, 100)
+   } else if (tSeconds >= 15 && tSeconds < 30){
+      text("scene 2", 50, 100)
+   } else if (tSeconds >= 30 && tSeconds < 44.7){
+      text("scene 3", 50, 100)
+   }
+   
    for (i=1;i<12;i++){
 
       rect((width/8)*i*0.5,700,80,Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5), 0));
