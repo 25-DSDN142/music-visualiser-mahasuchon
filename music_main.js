@@ -24,7 +24,11 @@ let ghostArrayOther = []
 let tSeconds;
 
 
+let firstRun = true;
 
+let shota;
+let shotb;
+let shotc;
 
 //width and height are a thing
 
@@ -33,6 +37,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   textFont('Verdana'); // please use CSS safe fonts
   //rectMode(CENTER)
   textSize(24);
+  
 
    remapBass = map(bass,50,100,0,-500)
    remapVocal = map(vocal,0,100,0,-100)
@@ -40,17 +45,46 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
    remapOther = map(other,50,100,0,-500)
    
    
-   //rect(width/8, 700, 80, remapBass)
-   tSeconds = round(counter/60,5)
-   text(tSeconds + " seconds elapsed", 50, 50)
-   if (tSeconds < 15){
-      text("scene 1", 50, 100)
-   } else if (tSeconds >= 15 && tSeconds < 30){
-      text("scene 2", 50, 100)
-   } else if (tSeconds >= 30 && tSeconds < 44.7){
-      text("scene 3", 50, 100)
+
+   if(firstRun){
+      shota = loadImage('assets/shota.jpg')
+      shotb = loadImage('assets/shotb.jpg')
+      shotc = loadImage('assets/shotc.jpg')
+      firstRun = false;
    }
    
+
+   //rect(width/8, 700, 80, remapBass)
+   tSeconds = round(counter/60,5)
+   
+   if (tSeconds < 15){
+      image(shota, 0, 0);
+      fill(128)
+      text("scene 1, showroom lights off", 50, 100)
+      
+   } else if (tSeconds >= 15 && tSeconds < 30){
+      image(shota,0,0);
+      text("scene 2, showroom lights on", 50, 100)
+      
+   } else if (tSeconds >= 30 && tSeconds < 44.7){
+      image(shotb,0,0)
+      text("scene 3, shot b overcast", 50, 100)
+
+   } else if (tSeconds >= 44.7 && tSeconds < 59.5){
+      image(shotc,0,0)
+      text("scene 4, shot c close up", 50, 100)
+   } else if (tSeconds >= 59.5 && tSeconds < 74.3){   
+      text("scene 5",50,100)
+   } else if (tSeconds >= 74.3 && tSeconds < 89.1){
+      text("scene 6")
+   } else if (tSeconds >= 89.1 && tSeconds < 118.5){
+      text("scene 7")
+   } else if (tSeconds >=118.5 && tSeconds < 125.9){
+      text("scene 8")
+   }
+
+   text(tSeconds + " seconds elapsed", 50, 50)
+
    for (i=1;i<12;i++){
 
       rect((width/8)*i*0.5,700,80,Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5), 0));
