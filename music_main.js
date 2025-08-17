@@ -60,27 +60,37 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
    if (tSeconds < 15){
       image(shota, 0, 0);
       fill(128)
-      text("scene 1, showroom lights off", 50, 100)
+      text("scene 1, shot a showroom lights off", 50, 100)
       
    } else if (tSeconds >= 15 && tSeconds < 30){
       image(shota,0,0);
-      text("scene 2, showroom lights on", 50, 100)
+      text("scene 2, shot a showroom lights on", 50, 100)
       
    } else if (tSeconds >= 30 && tSeconds < 44.7){
-      image(shotb,0,0)
-      text("scene 3, shot b overcast", 50, 100)
+      image(shota,0,0)
+      text("scene 3, shot a overcast", 50, 100)
 
    } else if (tSeconds >= 44.7 && tSeconds < 59.5){
-      image(shotc,0,0)
-      text("scene 4, shot c close up", 50, 100)
+      image(shotb,0,0)
+      text("scene 4, shot b raining", 50, 100)
+
    } else if (tSeconds >= 59.5 && tSeconds < 74.3){   
-      text("scene 5",50,100)
+      image(shotb,0,0)
+      text("scene 5, shot b snowing",50,100)
+
    } else if (tSeconds >= 74.3 && tSeconds < 89.1){
-      text("scene 6")
+      image(shotc,0,0)
+      text("scene 6, shot c snowing",50,100)
+
    } else if (tSeconds >= 89.1 && tSeconds < 118.5){
-      text("scene 7")
+      image(shotc,0,0)
+      text("scene 7, shot c raining",50,100)
    } else if (tSeconds >=118.5 && tSeconds < 125.9){
-      text("scene 8")
+      image(shota,0,0)
+      text("scene 8, shot a tunnel",50,100)
+   } else if (tSeconds >= 125.9){
+      image(shota,0,0)
+      text("scene 9, shot a overcast",50,100)
    }
 
    text(tSeconds + " seconds elapsed", 50, 50)
