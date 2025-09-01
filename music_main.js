@@ -17,14 +17,20 @@ let prev9 = 1;
 let prev10 = 1;
 let prev11 = 1;
 
+let raintempX;
+let raintempY;
+
 
 let ghostArrayBass = []
 let ghostArrayDrum = []
 let ghostArrayOther = []
 let tSeconds;
 
+let rainArray = []
 
-let firstRun = true;
+
+
+let firstrun = true;
 
 let shota;
 let shotb;
@@ -32,11 +38,37 @@ let shotc;
 
 //width and height are a thing
 
+//RAIN BLUEPRINT
+
+   function rainBp(){
+      this.x = random(0,1920)
+      this.y = random(0,1080)
+
+      this.show = function() {
+         
+         fill(0,0,255);
+         ellipse(this.x,this.y,10,10);
+      }
+
+      this.update = function() {
+         this.y = this.y + 5
+         if (this.y > 1080){
+            this.y = 0;
+         }
+
+         }
+      
+   }
+
+
+
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
   background(200)
   textFont('Verdana'); // please use CSS safe fonts
   //rectMode(CENTER)
   textSize(24);
+
+
   
 
    remapBass = map(bass,50,100,0,-500)
@@ -46,21 +78,78 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
    
    
 
-   if(firstRun){
+   if(firstrun){
       shota = loadImage('assets/shota.jpg')
       shotb = loadImage('assets/shotb.jpg')
       shotc = loadImage('assets/shotc.jpg')
-      firstRun = false;
+      for (i=0; i<200;i++){
+         rainArray[i] = new rainBp(); //sets a rain blueprint
+      }
+      firstrun = false;
    }
+
+   function shotadrawcar(){
+      fill(255,0,0)
+      color(255,0,0)
+      beginShape();
+         vertex(1000,800)
+      endShape(CLOSE)
+   }
+
+   //RAIN FUNCTION
+
+   function updateRain(){
+      for (i=0;i<200;i++){
+         rainArray[i].show();
+         rainArray[i].update();
+      }
+   }
+
+
+
+
+
+   function rainfx(){
+
+      rect(1+raintempX,1+raintempY,50,50)
+
+      if (tSeconds > 0.00001){
+         raintempX = raintempX + 1
+         raintempY = raintempY + 3
+         if (raintempX > 1920){
+            raintempX = 1
+         } 
+         if (raintempY > 1080){
+            raintempY = 1
+         }
+      }
+
+
+   }
+
+
    
 
    //rect(width/8, 700, 80, remapBass)
    tSeconds = round(counter/60,5)
    
+
+   //scene switcher
+
+   
+
    if (tSeconds < 15){
       image(shota, 0, 0);
       fill(128)
       text("scene 1, shot a showroom lights off", 50, 100)
+      fill(255,0,0)
+      shotadrawcar()
+      text(mouseX + ", " + mouseY, 50, 200)
+
+
+      updateRain  ()
+      
+
       
    } else if (tSeconds >= 15 && tSeconds < 30){
       image(shota,0,0);
@@ -93,19 +182,37 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
       text("scene 9, shot a overcast",50,100)
    }
 
+   /*
+         beginShape();     //begins drawing top border (as a rectangle)           REFERENCE CODE
+      vertex(0,0); //top left corner
+      vertex(scaleVar,0);//top right corner
+      vertex(scaleVar, scaleVar*(1-borderSize));//bottom right corner
+      vertex(0,scaleVar*(1-borderSize)); //bottom left corner
+      endShape(CLOSE); //end shape
+      */
+
    text(tSeconds + " seconds elapsed", 50, 50)
 
-   for (i=1;i<12;i++){
+   for (i=0;i<11;i++){ //how many lines are there
 
-      rect((width/8)*i*0.5,700,80,Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5), 0));
+      rect(
+      (width/8)*i*0.5,
+      700,
+      80,
+      Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5),
+      0));
 
-      line((width/8)*i*0.5,ghostArrayBass[(ghostArrayBass.length)-(i)]+500,(width/8)*(i/2)+width/16,ghostArrayBass[(ghostArrayBass.length)-(i)-1]+500)
+      line(
+      (width/8)*i*0.5,
+      ghostArrayBass[(ghostArrayBass.length)-(i)]+500,
+      (width/8)*(i/2)+width/16,
+      ghostArrayBass[(ghostArrayBass.length)-(i)-1]+500);
 
       //line((width/8)*i*0.5,ghostArrayOther[(ghostArrayOther.length)-(i)]+500,(width/8)*(i/2)+width/16,ghostArrayOther[(ghostArrayOther.length)-(i)-1]+500)
 
 
       line()
-      console.log(ghostArrayBass[(ghostArrayBass.length)-(i)]+500)
+      //console.log(ghostArrayBass[(ghostArrayBass.length)-(i)]+500)
    }
 
    ghostArrayBass.push(remapBass)
