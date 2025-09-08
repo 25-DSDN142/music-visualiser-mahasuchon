@@ -25,8 +25,8 @@ let boundaryTR = [100,200];
 let boundaryBL = [10,800];
 let boundaryBR = [100,800];
 
-let boundaryHi = [400,363,1350,291] //in X1,Y1,X2,Y2. This defines the top half of the box. 1-numbered points determine the top left of the box, 2-numbered points determine top right
-let boundaryLo = [604,1005,1400,450] //in X3,Y3,X4,Y4. This defines the bottom half of the box. 3-numbered points determine bottom left, 4-numbered points determine bottom right
+let boundaryHi = [640,204,1475,450] //in X1,Y1,X2,Y2. This defines the top half of the box. 1-numbered points determine the top left of the box, 2-numbered points determine top right
+let boundaryLo = [660,820,1475,640] //in X3,Y3,X4,Y4. This defines the bottom half of the box. 3-numbered points determine bottom left, 4-numbered points determine bottom right
 
 //X3 CANNOT BE LOWER THAN X1
 
@@ -83,13 +83,32 @@ let raintempY;
          
       }
 
+   
+   function drawEnv(){
+      fill(10,10,255,50);beginShape();vertex(1920,450);vertex(1920,605);vertex(396,1080);vertex(0,1080);vertex(0,680);endShape(CLOSE); //draws the road
 
+      beginShape();
+      vertex(1920,381);
+      vertex(1920,425);
+      vertex(0,600);
+      vertex(0,460);
+      endShape(CLOSE); //draws guardrail
+
+      beginShape();
+      vertex(1920,553);
+      vertex(1920,566);
+      vertex(0,1068);
+      vertex(0,1029);
+      endShape(CLOSE);
+   }
 
    function draw_one_frame(words, vocal, drum, bass, other, counter) {
    background(200)
    textFont('Verdana'); // please use CSS safe fonts
    //rectMode(CENTER)
    textSize(24);
+
+   
 
 
       //for first visualizer 
@@ -108,12 +127,12 @@ let raintempY;
 
       
       if(firstrun){
-         shota = loadImage('assets/shota.jpg')
-         shotb = loadImage('assets/shotb.jpg')
+         shota = loadImage('assets/shota1.png')
+         shotb = loadImage('assets/shotb.png')
          shotc = loadImage('assets/shotc.jpg')
          for (i=0; i<200;i++){
             rainArray[i] = new rainBp(); //sets a rain blueprint
-         }
+         }  
          firstrun = false;
       }
 
@@ -156,17 +175,16 @@ let raintempY;
       //scene switcher
 
       if (tSeconds < 15){
-         image(shotb, 0, 0);
+         image(shota, 0, 0);
          fill(128)
          text("scene 1, shot a showroom lights off", 50, 100)
          fill(255,0,0)
+         drawEnv()
          shotadrawcar()
          text(mouseX + ", " + mouseY, 50, 200)
 
 
          //updateRain  ()
-         
-
          
       } else if (tSeconds >= 15 && tSeconds < 30){
          image(shota,0,0);
@@ -199,42 +217,22 @@ let raintempY;
          text("scene 9, shot a overcast",50,100)
       }
 
-      /*
-            beginShape();     //begins drawing top border (as a rectangle)           REFERENCE CODE
-         vertex(0,0); //top left corner
-         vertex(scaleVar,0);//top right corner
-         vertex(scaleVar, scaleVar*(1-borderSize));//bottom right corner
-         vertex(0,scaleVar*(1-borderSize)); //bottom left corner
-         endShape(CLOSE); //end shape
-         */
-
       text(tSeconds + " seconds elapsed", 50, 50)
 
-   for (i=1;i<11;i++){ //how many lines are there
+   for (i=1;i<14;i++){ //how many lines are there
 
-      /*rect(
-      (width/8)*i*0.5,
-      700,
-      80,
-      Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5),
-      0));
-         //old way to draw the bar visualizer
-      */
+      /*rect((width/8)*i*0.5,700,80,Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5),0));  //old way to draw the bar visualizer*/
+
+
+      fill(0,255,0,5); //This fills in the boundaries. used for testing
+      //beginShape();vertex(boundaryHi[0],boundaryHi[1]); vertex(boundaryHi[2],boundaryHi[3]);vertex(boundaryLo[2],boundaryLo[3]);vertex(boundaryLo[0],boundaryLo[1]);endShape(CLOSE);
+      
+
 
       
-      /*fill(0,255,0,05) //fill in the boundaries
-      beginShape();
-      vertex(boundaryHi[0],boundaryHi[1]); 
-      vertex(boundaryHi[2],boundaryHi[3]);
-      vertex(boundaryLo[2],boundaryLo[3]);
-      vertex(boundaryLo[0],boundaryLo[1]);
-      endShape(CLOSE);
+      fill(0,0,200,0+(ghostArrayBass[(ghostArrayBass.length)-(i)])*170)
 
-      */
-
-      fill(0,0,255-(i*20/
-         Math.max(ghostArrayBass[(ghostArrayBass.length)-(i)],0)
-      ),120)
+      //ghostArrayBass[(ghostArrayBass.length)-(i)]
 
       /*
       to find a point in a line made of two points, where the two points that make up the line consist of X1, Y1, X2, Y2
@@ -285,31 +283,7 @@ let raintempY;
 
 
       /*beginShape(); //this draws maximum of the bars
-      vertex( //bottom left
-      vertBLX,
-      vertBLY
-      );
-
-      vertex( //bottom right
-      vertBRX,
-      vertBRY
-      );
-
-      vertex( //top right
-      vertTRX,
-      vertTRY
-      );
-
-      vertex( //top left
-      vertTLX,
-      vertTLY
-      );
-      endShape(CLOSE);*/
-
-      /*ok, so now we need to have it react to music.
-
       how to do this?
-
       find the top right and bottom right points, and draw a line between them.
 
       from before,
@@ -327,13 +301,7 @@ let raintempY;
       vertex( //top right
       boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w),    //THIS IS X2
       boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)     //THIS IS Y2
-      );
-   
-      so, filling it in
-      it will look messy, but not sure if theres a better way to do it
-
-      */
-      p2 = 0.5
+      );*/
 
 
       beginShape()
@@ -471,9 +439,6 @@ let raintempY;
    ghostArrayDrum.push(remapDrum)
    ghostArrayOther.push(remapOther)
 
-
-
-
 }        
 
 
@@ -544,17 +509,6 @@ let raintempY;
 
   
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
