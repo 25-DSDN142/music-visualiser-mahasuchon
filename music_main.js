@@ -324,19 +324,25 @@ let raintempY;
 
       beginShape()
       vertex( //THIS IS THE TOP RIGHT CORNER
+      Math.min(
+      (
       (vertBRX) /*THIS IS X1. X1 = BRX*/
       +
       ((vertTRX) /*THIS IS X2. X2 = TRX */ 
       -
-      (vertBRX) /*THIS IS X1. X1 = BRX*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)],
+      (vertBRX) /*THIS IS X1. X1 = BRX*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)])
+      ,vertBRX) //this ensures it cant go under the limit
+      ,
 
 
+      Math.min(
+      (
       (vertBRY) /*THIS IS Y1. Y1 = BRY*/
       + 
       ((vertTRY) /*THIS IS Y2. Y2 = TRY*/ 
       - 
-      (vertBRY) /*THIS IS Y1. Y1 = BRY*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
-      );
+      (vertBRY) /*THIS IS Y1. Y1 = BRY*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)])
+      ,vertBRY)); //this ensures it cant go under the limit
 
       vertex( //bottom right
       vertBRX,    //THIS IS X1
@@ -349,18 +355,26 @@ let raintempY;
       )
 
       vertex( //THIS IS THE TOP LEFT CORNER. same code as the top right corner but any R in vert variables are changed to L
+      Math.min(
+      (
+      
       (vertBLX) 
       +
       ((vertTLX) /*THIS IS X2. X2 = TRX */ 
       -
-      (vertBLX) /*THIS IS X1. X1 = BRX*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)],
+      (vertBLX) /*THIS IS X1. X1 = BRX*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]),
+      vertBLX), //ensures it cant go under the limit
 
+      Math.min(
+
+      (
 
       (vertBLY) /*THIS IS Y1. Y1 = BRY*/
       + 
       ((vertTLY) /*THIS IS Y2. Y2 = TRY*/ 
       - 
-      (vertBLY) /*THIS IS Y1. Y1 = BRY*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+      (vertBLY) /*THIS IS Y1. Y1 = BRY*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)])
+      ,vertBLY)
       );
 
 
