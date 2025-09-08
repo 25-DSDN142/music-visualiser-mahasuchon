@@ -247,33 +247,45 @@ let raintempY;
       
       */
 
-      p = i/10; //how far along the line you want to be, in percent. 0 to 1.
+      p = i/10; //how far along the line you want to be, controlled by i
       w = 0.08; // how wide you want each bar to be
+
+
+      let vertBLX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p //BL -> Bottom Left, X -> X axis
+      let vertBLY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*p
+
+      let vertBRX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w)
+      let vertBRY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)
+
+      let vertTRX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w)
+      let vertTRY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)
+
+      let vertTLX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*p
+      let vertTLY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
 
 
       beginShape();
       vertex( //bottom left
-      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p,
-      boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*p
+      vertBLX,
+      vertBLY
       );
 
       vertex( //bottom right
-      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w),
-      boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)
+      vertBRX,
+      vertBRY
       );
 
       vertex( //top right
-      boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w),
-      boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)
+      vertTRX,
+      vertTRY
       );
 
       vertex( //top left
-      boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*p,
-      boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
+      vertTLX,
+      vertTLY
       );
 
       endShape(CLOSE);
-
 
       /*ok, so now we need to have it react to music.
 
@@ -322,10 +334,16 @@ let raintempY;
       );
 
       vertex( //bottom right
-      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w),    //THIS IS X1
-      boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)     //THIS IS Y1
+      vertBRX,    //THIS IS X1
+      vertBRY     //THIS IS Y1
       );
-      vertex(0,0);
+
+      vertex( //bottom left
+         vertBLX,
+         vertBLY
+      )
+
+      //vertex(0,0);
       endShape(CLOSE)
 
       /*where p2 is the percentage along the line that I want it to be
