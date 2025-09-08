@@ -200,7 +200,7 @@ let raintempY;
 
       text(tSeconds + " seconds elapsed", 50, 50)
 
-   for (i=0;i<10;i++){ //how many lines are there
+   for (i=1;i<11;i++){ //how many lines are there
 
       rect(
       (width/8)*i*0.5,
@@ -252,7 +252,7 @@ let raintempY;
       
       */
 
-      p = i/10; //how far along the line you want to be, controlled by i
+      p = (i-1)/10; //how far along the line you want to be, controlled by i
       w = 0.08; // how wide you want each bar to be
 
 
