@@ -324,57 +324,45 @@ let raintempY;
 
       beginShape()
       vertex( //THIS IS THE TOP RIGHT CORNER
-      Math.min(
-      (
-      (vertBRX) /*THIS IS X1. X1 = BRX*/
-      +
-      ((vertTRX) /*THIS IS X2. X2 = TRX */ 
-      -
-      (vertBRX) /*THIS IS X1. X1 = BRX*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)])
-      ,vertBRX) //this ensures it cant go under the limit
-      ,
+         Math.min(
+            (
+               (vertBRX) /*X1*/
+               +((vertTRX) /*X2*/ 
+               -(vertBRX) /*X1*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+            )
+         ,vertBRX) //2nd argument in Math.min. Prevents it from going below minimum.
+         ,
+         Math.min(
+            (
+               (vertBRY) /*X*/
+               +((vertTRY) /*Y2*/ 
+               -(vertBRY) /*Y1*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+            )
+            ,vertBRY //2nd arg in Math.min
+         )
+      ); //end of Math.min
 
-
-      Math.min(
-      (
-      (vertBRY) /*THIS IS Y1. Y1 = BRY*/
-      + 
-      ((vertTRY) /*THIS IS Y2. Y2 = TRY*/ 
-      - 
-      (vertBRY) /*THIS IS Y1. Y1 = BRY*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)])
-      ,vertBRY)); //this ensures it cant go under the limit
-
-      vertex( //bottom right
-      vertBRX,    //THIS IS X1
-      vertBRY     //THIS IS Y1
-      );
-
-      vertex( //bottom left
-         vertBLX,
-         vertBLY
-      )
+      vertex(vertBRX,vertBRY); /*Bottom right vert*/
+      vertex(vertBLX,vertBLY); /*Bottom left vert*/
 
       vertex( //THIS IS THE TOP LEFT CORNER. same code as the top right corner but any R in vert variables are changed to L
-      Math.min(
-      (
-      
-      (vertBLX) 
-      +
-      ((vertTLX) /*THIS IS X2. X2 = TRX */ 
-      -
-      (vertBLX) /*THIS IS X1. X1 = BRX*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]),
-      vertBLX), //ensures it cant go under the limit
+         Math.min(
+            (
+               (vertBLX) /*X1*/
+               +((vertTLX) /*X2*/ 
+               -(vertBLX) /*X1*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+            ),
+            vertBLX //2nd arg in Math.min
+         ), 
 
-      Math.min(
-
-      (
-
-      (vertBLY) /*THIS IS Y1. Y1 = BRY*/
-      + 
-      ((vertTLY) /*THIS IS Y2. Y2 = TRY*/ 
-      - 
-      (vertBLY) /*THIS IS Y1. Y1 = BRY*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)])
-      ,vertBLY)
+         Math.min(
+            (
+               (vertBLY) /*Y1*/
+               +((vertTLY) /*Y2*/ 
+               -(vertBLY) /*Y1*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+            )
+            ,vertBLY //2nd arg in Math.min
+         )
       );
 
 
