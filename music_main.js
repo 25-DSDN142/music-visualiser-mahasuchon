@@ -85,6 +85,12 @@ let raintempY;
       remapVocal = map(vocal,0,100,0,-100)
       remapDrum = map(drum,50,100,0,-500)
       remapOther = map(other,50,100,0,-500)
+
+      remapBass2 = map(bass,50,100,0,1)
+      remapVocal2 = map(vocal,0,100,0,1)
+      remapDrum2 = map(drum,50,100,0,1)
+      remapOther2 = map(other,50,100,0,1)
+
       
       if(firstrun){
          shota = loadImage('assets/shota.jpg')
@@ -189,7 +195,7 @@ let raintempY;
 
       text(tSeconds + " seconds elapsed", 50, 50)
 
-   for (i=0;i<11;i++){ //how many lines are there
+   for (i=0;i<10;i++){ //how many lines are there
 
       rect(
       (width/8)*i*0.5,
@@ -241,41 +247,92 @@ let raintempY;
       
       */
 
-      p = 0.5;
-      w = 0.1;
+      p = i/10; //how far along the line you want to be, in percent. 0 to 1.
+      w = 0.08; // how wide you want each bar to be
 
 
       beginShape();
-      vertex(
+      vertex( //bottom left
       boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p,
       boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*p
       );
 
-      vertex(
+      vertex( //bottom right
       boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w),
       boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)
       );
 
-      vertex(
+      vertex( //top right
       boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w),
       boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)
       );
 
-      vertex(
+      vertex( //top left
       boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*p,
       boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
       );
 
       endShape(CLOSE);
 
-      /*
 
-      where w is the width of the bar?
+      /*ok, so now we need to have it react to music.
+
+      how to do this?
+
+      find the top right and bottom right points, and draw a line between them.
+
+      from before,
+      Point = X1 + (X2-X1) * p, Y1 + (Y2-Y1) * p
+
+      where X1,Y1 is the bottom right point and X2,Y2 is the top right point.
+
+      so, from the above code, this is what we are working with.
+
+      vertex( //bottom right
+      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w),    //THIS IS X1
+      boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)     //THIS IS Y1
+      );
+
+      vertex( //top right
+      boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w),    //THIS IS X2
+      boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)     //THIS IS Y2
+      );
+   
+      so, filling it in
+      it will look messy, but not sure if theres a better way to do it
 
       */
+      p2 = 0.5
+
+
+      beginShape()
+      vertex( //THIS IS EFFECTIVELY THE TOP RIGHT CORNER
+      (boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w)) //THIS IS X1
+      +
+      ((boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w)) /*THIS IS X2*/ 
+      -
+      (boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w)) /*THIS IS X1*/ ) * p2,
+
+
+      (boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)) //THIS IS Y1
+      + 
+      ((boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)) /*THIS IS Y2*/ 
+      - 
+      (boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)) /*THIS IS Y1*/ ) * p2
+      );
+
+      vertex( //bottom right
+      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w),    //THIS IS X1
+      boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)     //THIS IS Y1
+      );
+      vertex(0,0);
+      endShape(CLOSE)
+
+      /*where p2 is the percentage along the line that I want it to be
+
 
       
-      
+      */
       
       
       
