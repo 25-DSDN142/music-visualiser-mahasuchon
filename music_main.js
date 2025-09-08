@@ -34,6 +34,11 @@ let raintempY;
    let ghostArrayBass = []
    let ghostArrayDrum = []
    let ghostArrayOther = []
+
+   let ghostArrayBass2 = []
+   let ghostArrayDrum2 = []
+   let ghostArrayOther2 = []
+
    let tSeconds;
 
    let rainArray = []
@@ -318,19 +323,19 @@ let raintempY;
 
 
       beginShape()
-      vertex( //THIS IS EFFECTIVELY THE TOP RIGHT CORNER
-      (boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w)) //THIS IS X1
+      vertex( //THIS IS THE TOP RIGHT CORNER
+      (vertBRX) /*THIS IS X1. X1 = BRX*/
       +
-      ((boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w)) /*THIS IS X2*/ 
+      ((vertTRX) /*THIS IS X2. X2 = TRX */ 
       -
-      (boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w)) /*THIS IS X1*/ ) * p2,
+      (vertBRX) /*THIS IS X1. X1 = BRX*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)],
 
 
-      (boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)) //THIS IS Y1
+      (vertBRY) /*THIS IS Y1. Y1 = BRY*/
       + 
-      ((boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)) /*THIS IS Y2*/ 
+      ((vertTRY) /*THIS IS Y2. Y2 = TRY*/ 
       - 
-      (boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)) /*THIS IS Y1*/ ) * p2
+      (vertBRY) /*THIS IS Y1. Y1 = BRY*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
       );
 
       vertex( //bottom right
@@ -342,6 +347,23 @@ let raintempY;
          vertBLX,
          vertBLY
       )
+
+      vertex( //THIS IS THE TOP LEFT CORNER. same code as the top right corner but any R in vert variables are changed to L
+      (vertBLX) 
+      +
+      ((vertTLX) /*THIS IS X2. X2 = TRX */ 
+      -
+      (vertBLX) /*THIS IS X1. X1 = BRX*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)],
+
+
+      (vertBLY) /*THIS IS Y1. Y1 = BRY*/
+      + 
+      ((vertTLY) /*THIS IS Y2. Y2 = TRY*/ 
+      - 
+      (vertBLY) /*THIS IS Y1. Y1 = BRY*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+      );
+
+
 
       //vertex(0,0);
       endShape(CLOSE)
@@ -408,6 +430,10 @@ let raintempY;
       */
 
 
+      
+
+      //original version of visualizer
+
 
       line(
       (width/8)*i*0.5,
@@ -425,6 +451,11 @@ let raintempY;
    ghostArrayBass.push(remapBass)
    ghostArrayDrum.push(remapDrum)
    ghostArrayOther.push(remapOther)
+
+   ghostArrayBass2.push(remapBass2)
+   ghostArrayDrum2.push(remapDrum2)
+   ghostArrayOther2.push(remapOther2)
+
 
 
 
