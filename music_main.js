@@ -17,27 +17,35 @@ let prev9 = 1;
 let prev10 = 1;
 let prev11 = 1;
 
+let wValue = 0.06;
+let wInfluence = 0.002;
+
 let boundaryTL = [10,200];
 let boundaryTR = [100,200];
 let boundaryBL = [10,800];
 let boundaryBR = [100,800];
 
-let boundaryHi = [100,200,1700,150] //in X1,Y1,X2,Y2. This defines the top half of the box
-let boundaryLo = [100,800,1900,900] //in X3,Y3,X4,Y4. This defines the bottom half of the box
+let boundaryHi = [400,363,1350,291] //in X1,Y1,X2,Y2. This defines the top half of the box. 1-numbered points determine the top left of the box, 2-numbered points determine top right
+let boundaryLo = [604,1005,1400,450] //in X3,Y3,X4,Y4. This defines the bottom half of the box. 3-numbered points determine bottom left, 4-numbered points determine bottom right
 
+//X3 CANNOT BE LOWER THAN X1
+
+
+//let boundaryHi = [100,200,1700,150] //oeiginal boundaries
+//let boundaryLo = [100,800,1900,900] //original boundaries
 
 
 //let raintempX;
 let raintempY;
 
 
+   //let ghostArrayBass = []
+   //let ghostArrayDrum = []
+   //let ghostArrayOther = []
+
    let ghostArrayBass = []
    let ghostArrayDrum = []
    let ghostArrayOther = []
-
-   let ghostArrayBass2 = []
-   let ghostArrayDrum2 = []
-   let ghostArrayOther2 = []
 
    let tSeconds;
 
@@ -84,17 +92,19 @@ let raintempY;
    textSize(24);
 
 
-   
+      //for first visualizer 
 
-      remapBass = map(bass,50,100,0,-500)
+      /*remapBass = map(bass,50,100,0,-500)
       remapVocal = map(vocal,0,100,0,-100)
       remapDrum = map(drum,50,100,0,-500)
-      remapOther = map(other,50,100,0,-500)
+      remapOther = map(other,50,100,0,-500)*/
+      
+      //for 2nd visualizer
 
-      remapBass2 = map(bass,50,100,0,1)
-      remapVocal2 = map(vocal,0,100,0,1)
-      remapDrum2 = map(drum,50,100,0,1)
-      remapOther2 = map(other,50,100,0,1)
+      remapBass = map(bass,50,100,0,1)
+      remapVocal = map(vocal,0,100,0,1)
+      remapDrum = map(drum,50,100,0,1)
+      remapOther = map(other,50,100,0,1)
 
       
       if(firstrun){
@@ -146,7 +156,7 @@ let raintempY;
       //scene switcher
 
       if (tSeconds < 15){
-         image(shota, 0, 0);
+         image(shotb, 0, 0);
          fill(128)
          text("scene 1, shot a showroom lights off", 50, 100)
          fill(255,0,0)
@@ -202,16 +212,17 @@ let raintempY;
 
    for (i=1;i<11;i++){ //how many lines are there
 
-      rect(
+      /*rect(
       (width/8)*i*0.5,
       700,
       80,
       Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5),
       0));
+         //old way to draw the bar visualizer
+      */
 
-         //alternate way to draw the bar visualizer
-
-      fill(0,255,0,5)
+      
+      /*fill(0,255,0,05) //fill in the boundaries
       beginShape();
       vertex(boundaryHi[0],boundaryHi[1]); 
       vertex(boundaryHi[2],boundaryHi[3]);
@@ -219,7 +230,11 @@ let raintempY;
       vertex(boundaryLo[0],boundaryLo[1]);
       endShape(CLOSE);
 
-      fill(0,0,255,120)
+      */
+
+      fill(0,0,255-(i*20/
+         Math.max(ghostArrayBass[(ghostArrayBass.length)-(i)],0)
+      ),120)
 
       /*
       to find a point in a line made of two points, where the two points that make up the line consist of X1, Y1, X2, Y2
@@ -252,8 +267,8 @@ let raintempY;
       
       */
 
-      p = (i-1)/10; //how far along the line you want to be, controlled by i
-      w = 0.08; // how wide you want each bar to be
+      p = (i-1)/10; //how far along the line you want to be, controlled by i. if you want to change how many lines FIT within the boundaries, change this value
+      w = wValue-(i*wInfluence); // how wide you want each bar to be
 
 
       let vertBLX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p //BL -> Bottom Left, X -> X axis
@@ -269,7 +284,7 @@ let raintempY;
       let vertTLY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
 
 
-      beginShape();
+      /*beginShape(); //this draws maximum of the bars
       vertex( //bottom left
       vertBLX,
       vertBLY
@@ -289,8 +304,7 @@ let raintempY;
       vertTLX,
       vertTLY
       );
-
-      endShape(CLOSE);
+      endShape(CLOSE);*/
 
       /*ok, so now we need to have it react to music.
 
@@ -328,7 +342,7 @@ let raintempY;
             (
                (vertBRX) /*X1*/
                +((vertTRX) /*X2*/ 
-               -(vertBRX) /*X1*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+               -(vertBRX) /*X1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
             )
          ,vertBRX) //2nd argument in Math.min. Prevents it from going below minimum.
          ,
@@ -336,7 +350,7 @@ let raintempY;
             (
                (vertBRY) /*X*/
                +((vertTRY) /*Y2*/ 
-               -(vertBRY) /*Y1*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+               -(vertBRY) /*Y1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
             )
             ,vertBRY //2nd arg in Math.min
          )
@@ -350,7 +364,7 @@ let raintempY;
             (
                (vertBLX) /*X1*/
                +((vertTLX) /*X2*/ 
-               -(vertBLX) /*X1*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+               -(vertBLX) /*X1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
             ),
             vertBLX //2nd arg in Math.min
          ), 
@@ -359,21 +373,16 @@ let raintempY;
             (
                (vertBLY) /*Y1*/
                +((vertTLY) /*Y2*/ 
-               -(vertBLY) /*Y1*/ ) * ghostArrayBass2[(ghostArrayBass2.length)-(i)]
+               -(vertBLY) /*Y1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
             )
             ,vertBLY //2nd arg in Math.min
          )
       );
 
-
-
       //vertex(0,0);
       endShape(CLOSE)
 
       /*where p2 is the percentage along the line that I want it to be
-
-
-      
       */
       
       
@@ -402,6 +411,10 @@ let raintempY;
 
 
       /*
+
+
+      OLD PLAN, UNUSED
+
 
       plan is to:
 
@@ -437,11 +450,11 @@ let raintempY;
       //original version of visualizer
 
 
-      line(
+      /*line(
       (width/8)*i*0.5,
       ghostArrayBass[(ghostArrayBass.length)-(i)]+500,
       (width/8)*(i/2)+width/16,
-      ghostArrayBass[(ghostArrayBass.length)-(i)-1]+500);
+      ghostArrayBass[(ghostArrayBass.length)-(i)-1]+500);*/
 
       //line((width/8)*i*0.5,ghostArrayOther[(ghostArrayOther.length)-(i)]+500,(width/8)*(i/2)+width/16,ghostArrayOther[(ghostArrayOther.length)-(i)-1]+500)
 
@@ -450,13 +463,13 @@ let raintempY;
       //console.log(ghostArrayBass[(ghostArrayBass.length)-(i)]+500)
    }
 
+   //ghostArrayBass.push(remapBass)
+   //ghostArrayDrum.push(remapDrum)
+   //ghostArrayOther.push(remapOther)
+
    ghostArrayBass.push(remapBass)
    ghostArrayDrum.push(remapDrum)
    ghostArrayOther.push(remapOther)
-
-   ghostArrayBass2.push(remapBass2)
-   ghostArrayDrum2.push(remapDrum2)
-   ghostArrayOther2.push(remapOther2)
 
 
 
