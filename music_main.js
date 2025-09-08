@@ -17,181 +17,172 @@ let prev9 = 1;
 let prev10 = 1;
 let prev11 = 1;
 
-let raintempX;
+let boundaryTL = [10,200];
+let boundaryTR = [1500,200];
+let boundaryBL = [10,800];
+let boundaryBR = [1500,800];
+
+//let raintempX;
 let raintempY;
 
 
-let ghostArrayBass = []
-let ghostArrayDrum = []
-let ghostArrayOther = []
-let tSeconds;
+   let ghostArrayBass = []
+   let ghostArrayDrum = []
+   let ghostArrayOther = []
+   let tSeconds;
 
-let rainArray = []
+   let rainArray = []
 
 
 
-let firstrun = true;
+   let firstrun = true;
 
-let shota;
-let shotb;
-let shotc;
+   let shota;
+   let shotb;
+   let shotc;
 
-//width and height are a thing
+   //width and height are a thing
 
-//RAIN BLUEPRINT
+   //RAIN BLUEPRINT
 
-   function rainBp(){
-      this.x = random(0,1920)
-      this.y = random(0,1080)
+      function rainBp(){
+         this.x = random(0,1920)
+         this.y = random(0,1080)
 
-      this.show = function() {
+         this.show = function() {
+            
+            fill(0,0,255);
+            ellipse(this.x,this.y,10,10);
+         }
+
+         this.update = function() {
+            this.y = this.y + 5
+            if (this.y > 1080){
+               this.y = 0;
+            }
+
+            }
          
-         fill(0,0,255);
-         ellipse(this.x,this.y,10,10);
       }
 
-      this.update = function() {
-         this.y = this.y + 5
-         if (this.y > 1080){
-            this.y = 0;
-         }
 
-         }
+
+   function draw_one_frame(words, vocal, drum, bass, other, counter) {
+   background(200)
+   textFont('Verdana'); // please use CSS safe fonts
+   //rectMode(CENTER)
+   textSize(24);
+
+
+   
+
+      remapBass = map(bass,50,100,0,-500)
+      remapVocal = map(vocal,0,100,0,-100)
+      remapDrum = map(drum,50,100,0,-500)
+      remapOther = map(other,50,100,0,-500)
       
-   }
-
-
-
-function draw_one_frame(words, vocal, drum, bass, other, counter) {
-  background(200)
-  textFont('Verdana'); // please use CSS safe fonts
-  //rectMode(CENTER)
-  textSize(24);
-
-
-  
-
-   remapBass = map(bass,50,100,0,-500)
-   remapVocal = map(vocal,0,100,0,-100)
-   remapDrum = map(drum,50,100,0,-500)
-   remapOther = map(other,50,100,0,-500)
-   
-   
-
-   if(firstrun){
-      shota = loadImage('assets/shota.jpg')
-      shotb = loadImage('assets/shotb.jpg')
-      shotc = loadImage('assets/shotc.jpg')
-      for (i=0; i<200;i++){
-         rainArray[i] = new rainBp(); //sets a rain blueprint
+      if(firstrun){
+         shota = loadImage('assets/shota.jpg')
+         shotb = loadImage('assets/shotb.jpg')
+         shotc = loadImage('assets/shotc.jpg')
+         for (i=0; i<200;i++){
+            rainArray[i] = new rainBp(); //sets a rain blueprint
+         }
+         firstrun = false;
       }
-      firstrun = false;
-   }
 
-   function shotadrawcar(){
-      fill(255,0,0)
-      color(255,0,0)
-      beginShape();
-         vertex(1000,800)
-      endShape(CLOSE)
-   }
-
-   //RAIN FUNCTION
-
-   function updateRain(){
-      for (i=0;i<200;i++){
-         rainArray[i].show();
-         rainArray[i].update();
+      function shotadrawcar(){
+         fill(255,0,0)
+         color(255,0,0)
+         beginShape();
+            vertex(1000,800)
+         endShape(CLOSE)
       }
-   }
 
+      //RAIN FUNCTION
 
-
-
-
-   function rainfx(){
-
-      rect(1+raintempX,1+raintempY,50,50)
-
-      if (tSeconds > 0.00001){
-         raintempX = raintempX + 1
-         raintempY = raintempY + 3
-         if (raintempX > 1920){
-            raintempX = 1
-         } 
-         if (raintempY > 1080){
-            raintempY = 1
+      function updateRain(){
+         for (i=0;i<200;i++){
+            rainArray[i].show();
+            rainArray[i].update();
          }
       }
 
+      function rainfx(){
 
-   }
+         rect(1+raintempX,1+raintempY,50,50)
 
+         if (tSeconds > 0.00001){
+            raintempX = raintempX + 1
+            raintempY = raintempY + 3
+            if (raintempX > 1920){
+               raintempX = 1
+            } 
+            if (raintempY > 1080){
+               raintempY = 1
+            }
+         }
+      }
 
-   
-
-   //rect(width/8, 700, 80, remapBass)
-   tSeconds = round(counter/60,5)
-   
-
-   //scene switcher
-
-   
-
-   if (tSeconds < 15){
-      image(shota, 0, 0);
-      fill(128)
-      text("scene 1, shot a showroom lights off", 50, 100)
-      fill(255,0,0)
-      shotadrawcar()
-      text(mouseX + ", " + mouseY, 50, 200)
-
-
-      updateRain  ()
+      //rect(width/8, 700, 80, remapBass)
+      tSeconds = round(counter/60,5)
       
+      //scene switcher
 
-      
-   } else if (tSeconds >= 15 && tSeconds < 30){
-      image(shota,0,0);
-      text("scene 2, shot a showroom lights on", 50, 100)
-      
-   } else if (tSeconds >= 30 && tSeconds < 44.7){
-      image(shota,0,0)
-      text("scene 3, shot a overcast", 50, 100)
+      if (tSeconds < 15){
+         image(shota, 0, 0);
+         fill(128)
+         text("scene 1, shot a showroom lights off", 50, 100)
+         fill(255,0,0)
+         shotadrawcar()
+         text(mouseX + ", " + mouseY, 50, 200)
 
-   } else if (tSeconds >= 44.7 && tSeconds < 59.5){
-      image(shotb,0,0)
-      text("scene 4, shot b raining", 50, 100)
 
-   } else if (tSeconds >= 59.5 && tSeconds < 74.3){   
-      image(shotb,0,0)
-      text("scene 5, shot b snowing",50,100)
+         //updateRain  ()
+         
 
-   } else if (tSeconds >= 74.3 && tSeconds < 89.1){
-      image(shotc,0,0)
-      text("scene 6, shot c snowing",50,100)
+         
+      } else if (tSeconds >= 15 && tSeconds < 30){
+         image(shota,0,0);
+         text("scene 2, shot a showroom lights on", 50, 100)
+         
+      } else if (tSeconds >= 30 && tSeconds < 44.7){
+         image(shota,0,0)
+         text("scene 3, shot a overcast", 50, 100)
 
-   } else if (tSeconds >= 89.1 && tSeconds < 118.5){
-      image(shotc,0,0)
-      text("scene 7, shot c raining",50,100)
-   } else if (tSeconds >=118.5 && tSeconds < 125.9){
-      image(shota,0,0)
-      text("scene 8, shot a tunnel",50,100)
-   } else if (tSeconds >= 125.9){
-      image(shota,0,0)
-      text("scene 9, shot a overcast",50,100)
-   }
+      } else if (tSeconds >= 44.7 && tSeconds < 59.5){
+         image(shotb,0,0)
+         text("scene 4, shot b raining", 50, 100)
 
-   /*
-         beginShape();     //begins drawing top border (as a rectangle)           REFERENCE CODE
-      vertex(0,0); //top left corner
-      vertex(scaleVar,0);//top right corner
-      vertex(scaleVar, scaleVar*(1-borderSize));//bottom right corner
-      vertex(0,scaleVar*(1-borderSize)); //bottom left corner
-      endShape(CLOSE); //end shape
-      */
+      } else if (tSeconds >= 59.5 && tSeconds < 74.3){   
+         image(shotb,0,0)
+         text("scene 5, shot b snowing",50,100)
 
-   text(tSeconds + " seconds elapsed", 50, 50)
+      } else if (tSeconds >= 74.3 && tSeconds < 89.1){
+         image(shotc,0,0)
+         text("scene 6, shot c snowing",50,100)
+
+      } else if (tSeconds >= 89.1 && tSeconds < 118.5){
+         image(shotc,0,0)
+         text("scene 7, shot c raining",50,100)
+      } else if (tSeconds >=118.5 && tSeconds < 125.9){
+         image(shota,0,0)
+         text("scene 8, shot a tunnel",50,100)
+      } else if (tSeconds >= 125.9){
+         image(shota,0,0)
+         text("scene 9, shot a overcast",50,100)
+      }
+
+      /*
+            beginShape();     //begins drawing top border (as a rectangle)           REFERENCE CODE
+         vertex(0,0); //top left corner
+         vertex(scaleVar,0);//top right corner
+         vertex(scaleVar, scaleVar*(1-borderSize));//bottom right corner
+         vertex(0,scaleVar*(1-borderSize)); //bottom left corner
+         endShape(CLOSE); //end shape
+         */
+
+      text(tSeconds + " seconds elapsed", 50, 50)
 
    for (i=0;i<11;i++){ //how many lines are there
 
@@ -201,6 +192,48 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
       80,
       Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5),
       0));
+
+         //alternate way to draw the bar visualizer
+
+      fill(0,255,0)
+      beginShape();
+      vertex(...boundaryTL); // the ... turns [50,100] into 50,100 aka takes it out of the array
+      vertex(...boundaryBL);
+      vertex(...boundaryBR);
+      vertex(...boundaryTR);
+      endShape(CLOSE);
+
+      /*
+
+      plan is to:
+
+      define two points as a base for where the lines will go
+      AKA
+      50,100 and 300,100
+      
+      lets say we will have 8 lines
+
+      take the differencce in distance between those points
+
+      300-50 = 250
+      100-100 = 0 -> we will not work with Y in this example
+
+      250/8 = 31.25
+
+      1st line will be at 50
+      2nd line will be at 50+(31.25*1)
+      3rd line will be at 50+(31.25*2)
+      4th line will be at 50+(31.25*3)
+
+      until
+
+      nth line IS at 50+(31.25*8) = 300
+
+      same logic with Y
+
+      */
+
+
 
       line(
       (width/8)*i*0.5,
