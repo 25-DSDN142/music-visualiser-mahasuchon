@@ -1,21 +1,7 @@
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 
-let temp = 1;
-let tempb = 2;
-let sizeVal;
-let colourVal;
-let previousval = 1;
-let previousval2 = 1;
-let prev3 = 1;
-let prev4 = 1;
-let prev5 = 1;
-let prev6 = 1;
-let prev7 = 1;
-let prev8 = 1;
-let prev9 = 1;
-let prev10 = 1;
-let prev11 = 1;
+
 
 let wValue = 0.06;
 let wInfluence = 0.002;
@@ -38,10 +24,6 @@ let boundaryLo = [660,820,1475,640] //in X3,Y3,X4,Y4. This defines the bottom ha
 //let raintempX;
 let raintempY;
 
-
-   //let ghostArrayBass = []
-   //let ghostArrayDrum = []
-   //let ghostArrayOther = []
 
    let ghostArrayBass = []
    let ghostArrayDrum = []
@@ -169,7 +151,6 @@ let raintempY;
          }
       }
 
-      //rect(width/8, 700, 80, remapBass)
       tSeconds = round(counter/60,5)
       
       //scene switcher
@@ -219,7 +200,7 @@ let raintempY;
 
       text(tSeconds + " seconds elapsed", 50, 50)
 
-   for (i=1;i<14;i++){ //how many lines are there
+   for (i=1;i<13;i++){ //how many lines are there
 
       /*rect((width/8)*i*0.5,700,80,Math.min((ghostArrayDrum[(ghostArrayDrum.length)-i])+(i*5),0));  //old way to draw the bar visualizer*/
 
@@ -232,38 +213,9 @@ let raintempY;
       
       fill(0,0,200,0+(ghostArrayBass[(ghostArrayBass.length)-(i)])*170)
 
-      //ghostArrayBass[(ghostArrayBass.length)-(i)]
-
-      /*
-      to find a point in a line made of two points, where the two points that make up the line consist of X1, Y1, X2, Y2
-
-      Point = X1 + (X2-X1) * p, Y1 + (Y2-Y1) * p
-      
-      where P is the percentage of how  far you are across the line
-
-      so, the bottom vertices need to be at 
-
-      vertex(
-      X1 + (X2-X1) * p , Y1 + (Y2-Y1) * p
-      )
-
-      where 
-      X1 = boundaryLo[0]
-      Y1 = boundaryLo[1]
-      X2 = boundaryLo[2]
-      Y2 = boundaryLo[3]
-
-      so
-
-      vertex(
-      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p,
-      boundaryLo[1]+(boundaryLo[3]-boundarylo[1])*p
-      )
-
-      except, thats only one point. if i want a bar, it will need to look like this?
+      //ghostArrayBass[(ghostArrayBass.length)-(i)] <- find volume values here
 
       
-      */
 
       p = (i-1)/10; //how far along the line you want to be, controlled by i. if you want to change how many lines FIT within the boundaries, change this value
       w = wValue-(i*wInfluence); // how wide you want each bar to be
@@ -282,26 +234,7 @@ let raintempY;
       let vertTLY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
 
 
-      /*beginShape(); //this draws maximum of the bars
-      how to do this?
-      find the top right and bottom right points, and draw a line between them.
-
-      from before,
-      Point = X1 + (X2-X1) * p, Y1 + (Y2-Y1) * p
-
-      where X1,Y1 is the bottom right point and X2,Y2 is the top right point.
-
-      so, from the above code, this is what we are working with.
-
-      vertex( //bottom right
-      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w),    //THIS IS X1
-      boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)     //THIS IS Y1
-      );
-
-      vertex( //top right
-      boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w),    //THIS IS X2
-      boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)     //THIS IS Y2
-      );*/
+      
 
 
       beginShape()
@@ -347,93 +280,31 @@ let raintempY;
          )
       );
 
-      //vertex(0,0);
       endShape(CLOSE)
 
-      /*where p2 is the percentage along the line that I want it to be
-      */
       
       
       
       
-      /*beginShape();                                          //OLD VERSION OF VERTEX BASED BAR VISUALIZER
-      vertex(         //bottom left
-         (boundaryBL[0])+(boundaryBR[0]-boundaryBL[0])*i,
-         (boundaryBL[1])+(boundaryBR[1]-boundaryBL[1])*i
-      );
-      vertex(        //bottom right
-         (boundaryBL[0])+(boundaryBR[0]-boundaryBL[0])*i+1,
-         (boundaryBL[1])+(boundaryBR[1]-boundaryBL[1])*i+1
-      );
-      vertex(        //top right
-         (boundaryTL[0])+(boundaryTR[0]-boundaryTL[0])*i,
-         //(boundaryBL[0])+(boundaryBR[0]-boundaryBL[0])*i+1,
-         //(boundaryTL[1])+(boundaryTR[1]-boundaryTL[1])*i
-         300
-      );
-
-      endShape(CLOSE)*/
 
 
 
 
 
-      /*
 
 
-      OLD PLAN, UNUSED
-
-
-      plan is to:
-
-      define two points as a base for where the lines will go
-      AKA
-      50,100 and 300,100
-      
-      lets say we will have 8 lines
-
-      take the differencce in distance between those points
-
-      300-50 = 250
-      100-100 = 0 -> we will not work with Y in this example
-
-      250/8 = 31.25
-
-      1st line will be at 50
-      2nd line will be at 50+(31.25*1)
-      3rd line will be at 50+(31.25*2)
-      4th line will be at 50+(31.25*3)
-
-      until
-
-      nth line IS at 50+(31.25*8) = 300
-
-      same logic with Y
-
-      */
 
 
       
 
-      //original version of visualizer
 
-
-      /*line(
-      (width/8)*i*0.5,
-      ghostArrayBass[(ghostArrayBass.length)-(i)]+500,
-      (width/8)*(i/2)+width/16,
-      ghostArrayBass[(ghostArrayBass.length)-(i)-1]+500);*/
-
-      //line((width/8)*i*0.5,ghostArrayOther[(ghostArrayOther.length)-(i)]+500,(width/8)*(i/2)+width/16,ghostArrayOther[(ghostArrayOther.length)-(i)-1]+500)
 
 
       line()
-      //console.log(ghostArrayBass[(ghostArrayBass.length)-(i)]+500)
+
    }
 
-   //ghostArrayBass.push(remapBass)
-   //ghostArrayDrum.push(remapDrum)
-   //ghostArrayOther.push(remapOther)
+
 
    ghostArrayBass.push(remapBass)
    ghostArrayDrum.push(remapDrum)
@@ -442,118 +313,4 @@ let raintempY;
 }        
 
 
-  /*let sizeVal = map(bass,40,100,0,height/1.5) //ALL DEPRECATED CODE
-  let sizeValB = map(bass,40,100,0,height/1.5)
-  let sizeValC = map(prev6,40,100,0,height/1.5)
-  let sizeValD = map(prev7,40,100,0,height/1.5)
-  let sizeValE = map(prev8,40,100,0,height/1.5)
-  let sizeValF = map(prev9,40,100,0,height/1.5)
-  let sizeValG = map(prev10,40,100,0,height/1.5)
-  let sizeValH = map(prev11,40,100,0,height/1.5)
-
-  if (temp > sizeVal) {
-   temp = temp - 5;
-  } else {
-   temp = sizeVal;
-  }
-
-  if (tempb > sizeValB) {
-   tempb = tempb - 5;
-  } else {
-   tempb = sizeValB;
-  }
   
-
-
-  //normal loudness bars
-  strokeWeight(0)
-
-  fill(10)
-  //rect(width/8,700,80,(-1*sizeVal))
-  rect(width/8*2,700,80,(-1*sizeValB))
-  rect(width/8*2.5,700,80,(-1*sizeValC)*0.9) //ghost bar bass 1
-  rect(width/8*3,700,80,(-1*sizeValD)*0.8) //ghost bar bass 2
-  rect(width/8*3.5,700,80,(-1*sizeValE)*0.7) //ghost bar bass 3
-  rect(width/8*4,700,80,(-1*sizeValF)*0.6) //ghost bar bass 4
-  rect(width/8*4.5,700,80,(-1*sizeValG)*0.5) //ghost bar bass 5
-  rect(width/8*5,700,80,(-1*sizeValH)*0.4) //ghost bar bass 6
-
-  strokeWeight(10)
-  color(255,0,0)
-
-  line(width/8*2,(-1.1*sizeValB)+700,width/8*2.5,(-1*sizeValC)+700)
-
-  line(width/8*2.5,(-1*sizeValC)+700,width/8*3,(-.9*sizeValD)+700)
-
-  line(width/8*3,(-.9*sizeValD)+700,width/8*3.5,(-.8*sizeValE)+700)
-
-  line(width/8*4,(-.7*sizeValF)+700,width/8*3.5,(-.8*sizeValE)+700)
-  line(width/8*4.5,(-.6*sizeValG)+700,width/8*4,(-.7*sizeValF)+700)
-  line(width/8*4.5,(-.6*sizeValG)+700,width/8*5,(-.5*sizeValH)+700)
-
-
-  
-  fill(255,0,0) //"peak" value
-
-  //rect(width/8,(-1*temp)+700,80,50);
-  //rect(width/8*2,(-1*tempb)+700,80,50);
-
-
-  temparrayghost.push(bass);
-  prev6 = temparrayghost[(temparrayghost.length)-2];
-  prev7 = temparrayghost[(temparrayghost.length)-4];
-  prev8 = temparrayghost[(temparrayghost.length)-6];
-  prev9 = temparrayghost[(temparrayghost.length)-8];
-  prev10 = temparrayghost[(temparrayghost.length)-10];
-  prev11 = temparrayghost[(temparrayghost.length)-12];
-
-  
-}
-
-
-
-*/
-
-  //temp = temp + 2
-  //if (temp > height){
-  // temp = 0
-  //}
-
-
-  /*   let bar_spacing = height / 10;
-   let bar_height = width / 12;
-   let bar_pos_x = width / 2;
- 
-// changes 
-   // vocal bar is red
-   fill(200, 0, 0);
-   rect(bar_pos_x, height / 2 + 1 * bar_spacing, 4 * vocal, bar_height);
-   fill(0);
-   text("vocals", bar_pos_x, height / 2 + 1 * bar_spacing + 8);
- 
-   // drum bar is green
-   fill(0, 200, 0);
-   rect(bar_pos_x, height / 2 + 2 * bar_spacing, 4 * drum, bar_height);
-   fill(0);
-   text("drums", bar_pos_x, height / 2 + 2 * bar_spacing + 8);
- 
-   // bass bar is blue
-   fill(50, 50, 240);
-   rect(bar_pos_x, height / 2 + 3 * bar_spacing, 4 * bass, bar_height);
-   fill(0);
-   text("bass", bar_pos_x, height / 2 + 3 * bar_spacing + 8);
- 
-   // other bar is white
-   fill(200, 200, 200);
-   rect(bar_pos_x, height / 2 + 4 * bar_spacing, 4 * other, bar_height);
-   fill(0);
-   text("other", bar_pos_x, height / 2 + 4 * bar_spacing + 8);
-   fill(255, 255, 0);
- 
-   // display "words"
-   textAlign(CENTER);
-   textSize(vocal);
-   text(words, width/2, height/3);
-}
-   */
-
