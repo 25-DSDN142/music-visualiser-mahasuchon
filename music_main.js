@@ -18,9 +18,14 @@ let prev10 = 1;
 let prev11 = 1;
 
 let boundaryTL = [10,200];
-let boundaryTR = [1500,200];
+let boundaryTR = [100,200];
 let boundaryBL = [10,800];
-let boundaryBR = [1500,800];
+let boundaryBR = [100,800];
+
+let boundaryHi = [100,200,1500,200] //in X1,Y1,X2,Y2. This defines the top half of the box
+let boundaryLo = [100,800,1500,800] //in X3,Y3,X4,Y4. This defines the bottom half of the box
+
+
 
 //let raintempX;
 let raintempY;
@@ -195,13 +200,43 @@ let raintempY;
 
          //alternate way to draw the bar visualizer
 
-      fill(0,255,0)
+      fill(0,255,0,5)
       beginShape();
-      vertex(...boundaryTL); // the ... turns [50,100] into 50,100 aka takes it out of the array
-      vertex(...boundaryBL);
-      vertex(...boundaryBR);
-      vertex(...boundaryTR);
+      vertex(boundaryHi[0],boundaryHi[1]); // the ... turns [50,100] into 50,100 aka takes it out of the array
+      vertex(boundaryHi[2],boundaryHi[3]);
+      vertex(boundaryLo[2],boundaryLo[3]);
+      vertex(boundaryLo[0],boundaryLo[1]);
       endShape(CLOSE);
+
+      fill(0,0,255,120)
+
+      
+      
+      
+      
+      
+      
+      /*beginShape();                                          //OLD VERSION OF VERTEX BASED BAR VISUALIZER
+      vertex(         //bottom left
+         (boundaryBL[0])+(boundaryBR[0]-boundaryBL[0])*i,
+         (boundaryBL[1])+(boundaryBR[1]-boundaryBL[1])*i
+      );
+      vertex(        //bottom right
+         (boundaryBL[0])+(boundaryBR[0]-boundaryBL[0])*i+1,
+         (boundaryBL[1])+(boundaryBR[1]-boundaryBL[1])*i+1
+      );
+      vertex(        //top right
+         (boundaryTL[0])+(boundaryTR[0]-boundaryTL[0])*i,
+         //(boundaryBL[0])+(boundaryBR[0]-boundaryBL[0])*i+1,
+         //(boundaryTL[1])+(boundaryTR[1]-boundaryTL[1])*i
+         300
+      );
+
+      endShape(CLOSE)*/
+
+
+
+
 
       /*
 
