@@ -22,8 +22,8 @@ let boundaryTR = [100,200];
 let boundaryBL = [10,800];
 let boundaryBR = [100,800];
 
-let boundaryHi = [100,200,1500,200] //in X1,Y1,X2,Y2. This defines the top half of the box
-let boundaryLo = [100,800,1500,800] //in X3,Y3,X4,Y4. This defines the bottom half of the box
+let boundaryHi = [100,200,1700,150] //in X1,Y1,X2,Y2. This defines the top half of the box
+let boundaryLo = [100,800,1900,900] //in X3,Y3,X4,Y4. This defines the bottom half of the box
 
 
 
@@ -202,13 +202,77 @@ let raintempY;
 
       fill(0,255,0,5)
       beginShape();
-      vertex(boundaryHi[0],boundaryHi[1]); // the ... turns [50,100] into 50,100 aka takes it out of the array
+      vertex(boundaryHi[0],boundaryHi[1]); 
       vertex(boundaryHi[2],boundaryHi[3]);
       vertex(boundaryLo[2],boundaryLo[3]);
       vertex(boundaryLo[0],boundaryLo[1]);
       endShape(CLOSE);
 
       fill(0,0,255,120)
+
+      /*
+      to find a point in a line made of two points, where the two points that make up the line consist of X1, Y1, X2, Y2
+
+      Point = X1 + (X2-X1) * p, Y1 + (Y2-Y1) * p
+      
+      where P is the percentage of how  far you are across the line
+
+      so, the bottom vertices need to be at 
+
+      vertex(
+      X1 + (X2-X1) * p , Y1 + (Y2-Y1) * p
+      )
+
+      where 
+      X1 = boundaryLo[0]
+      Y1 = boundaryLo[1]
+      X2 = boundaryLo[2]
+      Y2 = boundaryLo[3]
+
+      so
+
+      vertex(
+      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p,
+      boundaryLo[1]+(boundaryLo[3]-boundarylo[1])*p
+      )
+
+      except, thats only one point. if i want a bar, it will need to look like this?
+
+      
+      */
+
+      p = 0.5;
+      w = 0.1;
+
+
+      beginShape();
+      vertex(
+      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p,
+      boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*p
+      );
+
+      vertex(
+      boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w),
+      boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)
+      );
+
+      vertex(
+      boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w),
+      boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)
+      );
+
+      vertex(
+      boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*p,
+      boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
+      );
+
+      endShape(CLOSE);
+
+      /*
+
+      where w is the width of the bar?
+
+      */
 
       
       
