@@ -18,10 +18,23 @@ let boundaryLo = [660,820,1475,640] //in X3,Y3,X4,Y4. This defines the bottom ha
 
 let guardrailOffset = 0;
 
-speedLinesLife = []
+let speedLinesLife = []
 
-for (i=0;i<20;i++){
-   speedLinesLife[i] = 0
+let speedLinesLocation = []
+
+let speedLinesCount = 20;
+
+
+
+for (i=0;i<speedLinesCount;i++){
+   speedLinesLife[i] = //Math.random()
+   i*1/speedLinesCount
+   
+}
+
+
+for (i=0;i<speedLinesLocation;i++){
+   speedLinesLocation[i] = Math.random()
 }
 
 
@@ -50,25 +63,7 @@ let shotc;
 
 //RAIN BLUEPRINT
 
-function rainBp(){
-   this.x = random(0,1920)
-   this.y = random(0,1080)
 
-   this.show = function() {
-      
-      fill(0,0,255);
-      ellipse(this.x,this.y,10,10);
-   }
-
-   this.update = function() {
-      this.y = this.y + 5
-      if (this.y > 1080){
-         this.y = 0;
-      }
-
-      }
-   
-}
 
 function speedLines(){
    
@@ -78,14 +73,26 @@ function speedLines(){
 
    
 
-   for (i=0;i<20;i++){
+   for (i=0;i<speedLinesCount;i++){
       
       //let location of speed line = speedLineLife[i]. so,
-      line(speedLinesLife[i]*100,500+i*5,speedLinesLife[i]*100+250,500)
-      speedLinesLife[i] = speedLinesLife[i] + 0.01
-      console.log(speedLinesLife)
-      if (speedLinesLife[i] > 1){
+
+      stroke(speedLinesLife[i]*60)
+
+
+      line(
+         (1920+(speedLinesLife[i]*-1000))-speedLinesLocation[i]*1000,
+         600-(speedLinesLife[i]*-(250-(speedLinesLocation[i])*150)), 
+         (1970+(speedLinesLife[i]*-1000))-speedLinesLocation[i]*1000,
+         590-(speedLinesLife[i]*-(250-(speedLinesLocation[i])*150))
+         
+      )
+      
+      speedLinesLife[i] = speedLinesLife[i] + 0.03
+
+      if (speedLinesLife[i] > 1.8){
          speedLinesLife[i] = 0
+         speedLinesLocation[i] = Math.random()
       }
    }
 
@@ -175,37 +182,8 @@ textSize(24);
       shota = loadImage('assets/shota.png')
       shotb = loadImage('assets/shotb.png')
       shotc = loadImage('assets/shotc.jpg')
-      for (i=0; i<200;i++){
-         rainArray[i] = new rainBp(); //sets a rain blueprint
-      }  
+      console.log(speedLinesLife)
       firstrun = false;
-   }
-
-
-
-   //RAIN FUNCTION
-
-   function updateRain(){
-      for (i=0;i<200;i++){
-         rainArray[i].show();
-         rainArray[i].update();
-      }
-   }
-
-   function rainfx(){
-
-      rect(1+raintempX,1+raintempY,50,50)
-
-      if (tSeconds > 0.00001){
-         raintempX = raintempX + 1
-         raintempY = raintempY + 3
-         if (raintempX > 1920){
-            raintempX = 1
-         } 
-         if (raintempY > 1080){
-            raintempY = 1
-         }
-      }
    }
 
    tSeconds = round(counter/60,5)
@@ -228,7 +206,7 @@ textSize(24);
       text(mouseX + ", " + mouseY, 50, 200)
 
 
-      //updateRain  ()
+
       
    }/* else if (tSeconds >= 15 && tSeconds < 30){
       image(shota,0,0);
