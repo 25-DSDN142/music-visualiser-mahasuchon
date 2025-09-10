@@ -1,8 +1,6 @@
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 
-
-
 let wValue = 0.06;      //Changes width of visualizer bars
 let wInfluence = 0.002; //Changes influence of i. Basically determines how thick each visualizer bar is
 
@@ -13,6 +11,9 @@ let boundaryBR = [100,800];
 
 let boundaryHi = [640,204,1475,450] //in X1,Y1,X2,Y2. This defines the top half of the box. 1-numbered points determine the top left of the box, 2-numbered points determine top right
 let boundaryLo = [660,820,1475,640] //in X3,Y3,X4,Y4. This defines the bottom half of the box. 3-numbered points determine bottom left, 4-numbered points determine bottom right
+
+//let boundaryHi = [100,200,1700,150] //oeiginal boundaries
+//let boundaryLo = [100,800,1900,900] //original boundaries
 
 //X3 CANNOT BE LOWER THAN X1
 
@@ -26,7 +27,7 @@ let speedLinesLocation = []
 
 let speedLinesCount = 20;
 
-
+let backgroundCityData = []
 
 for (i=0;i<speedLinesCount;i++){
    speedLinesLife[i] = Math.random()*2
@@ -34,19 +35,10 @@ for (i=0;i<speedLinesCount;i++){
    
 }
 
-
 for (i=0;i<speedLinesLocation;i++){
    speedLinesLocation[i] = //Math.random()
    i*1/speedLinesCount
 }
-
-
-//let boundaryHi = [100,200,1700,150] //oeiginal boundaries
-//let boundaryLo = [100,800,1900,900] //original boundaries
-
-
-//let raintempX;
-let raintempY;
 
 let ghostArrayBass = []
 let ghostArrayDrum = []
@@ -62,11 +54,6 @@ let shota;
 let shotb;
 let shotc;
 
-//width and height are a thing
-
-
-
-
 function speedLines(){
    
    if (tSeconds > 1){
@@ -79,6 +66,8 @@ function speedLines(){
 
       stroke(60,60,60,speedLinesLife[i]*255)
 
+      //speedlineslife determines the life of that speedline
+      //speedlineslocation determines how spread out it is
 
       line( 
          (1920+(speedLinesLife[i]*-1000))-speedLinesLocation[i]*1000, 
@@ -100,8 +89,6 @@ function speedLines(){
 
 
 }
-
-
 
 function guardrailAnim(){
    fill(255,255,255,255)
@@ -184,6 +171,22 @@ function centerlineFill(){
    endShape(CLOSE);
 }
 
+function drawCarShadow(){
+   fill(0,0,0,120);
+   beginShape();  //draw shadow for car
+   vertex(1125,605);
+   vertex(1436,623);
+   vertex(1466,630);
+   vertex(1399,649);
+   vertex(1054,725);
+   vertex(754,771);
+   vertex(705,773); //rear of car
+   vertex(371,734);
+   vertex(399,720);
+   vertex(501,700);
+   vertex(691,670);
+   endShape(CLOSE);
+}
 
 function drawEnv(){
    fill(10,10,255,50);//fallback fill colour
@@ -235,31 +238,22 @@ function drawEnv(){
    vertex(0,1068);
    vertex(0,1029);
    endShape(CLOSE); */
-
-   fill(10);
-   
-   beginShape();  //draw shadow for car
-   vertex(1125,605);
-   vertex(1436,623);
-   vertex(1466,630);
-   vertex(1399,649);
-   vertex(1054,725);
-   vertex(754,771);
-   vertex(705,773); //rear of car
-   vertex(371,734);
-   vertex(399,720);
-   vertex(501,700);
-   vertex(691,670);
-   endShape(CLOSE);
 }
 
-   function shotadrawcar(){
+function drawBackgroundCity(){
+   fill(255)
+   for (i=1;i<100;i++){
+      rect((100*i)+(tSeconds*-500),backgroundCityData[i+100],backgroundCityData[i],200)
+   }
+   rect(50,50,100,100)
+
+}
+
+function shotadrawcar(){
    fill(255,0,0)
-   color(255,0,0)
-   beginShape();
-      vertex(1000,800)
-   endShape(CLOSE)
 }
+
+
 
 
 
@@ -285,6 +279,11 @@ textSize(24);
       shotc = loadImage('assets/shotc.jpg')
       console.log(speedLinesLife)
       firstrun = false;
+
+      for (i=1;i<1000;i++){                                 //generates a thousand lines of random numbers that can be used for making a city
+         backgroundCityData.push(50+(Math.random()*50))
+         console.log(backgroundCityData)
+      }
    }
 
    tSeconds = round(counter/60,5)
@@ -300,15 +299,19 @@ textSize(24);
       guardrailAnim, yellowlineAnim, whitelineAnim 
       drawEnv
       speedLines
+      drawCarShadow
       drawCar ON TOP
 
       */
+      drawBackgroundCity();
       centerlineFill();
       guardrailAnim();
       //yellowlineAnim();
       whitelineAnim();
       drawEnv()
       speedLines();
+
+      drawCarShadow();
 
       image(shota, 0, 0);
       fill(128)
