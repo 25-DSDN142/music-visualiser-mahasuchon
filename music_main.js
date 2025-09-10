@@ -108,8 +108,8 @@ function guardrailAnim(){
    //console.log(guardrailOffset)
 }
 
-function yellowlineAnim(){
-   fill(255,255,255,255)
+function whitelineAnim(){
+   fill(155,155,0,255)
    rect(
       2200-((centerlineOffset*40)**2.3),
       150-(centerlineOffset*-1000),
@@ -125,11 +125,11 @@ function yellowlineAnim(){
    }
 }
 
-function whitelineAnim(){
+function yellowlineAnim(){
 
    if (tSeconds == 0){
       centerlineOffset = 0.1;
-      fill(255,0,255,255)
+      fill(255,255,255,255)
       beginShape();
       vertex(1920,381)
       vertex(1920,566)
@@ -374,12 +374,31 @@ textSize(24);
    text(tSeconds + " seconds elapsed", 50, 50)
 
 
+
+
    beginShape();
-   vertex(964,860);
-   vertex(1041,883);
-   vertex(1743,663);
-   vertex(1690,649);
+   vertex(894,885); //bottom left 894 885
+   vertex(974,904); //bottom right 974 904
+
+
+   vertex(
+      (974 + (1743 - 974) * remapOther),
+      (904 + (663-904) * remapOther)
+   )
+
+
+
+   vertex(
+      (894 + (1690 - 894)*remapOther),
+      (885 + (649-885)*remapOther)
+   )
+   
+   //vertex(1743,663); //top right
+   //vertex(1690,649); //top left
    endShape(CLOSE);
+   
+
+   //x1 + (x2-x1) * p where p is the percentage alogn the line
 
    for (i=1;i<13;i++){ //how many lines are there
 
