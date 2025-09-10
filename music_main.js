@@ -241,11 +241,21 @@ function drawEnv(){
 }
 
 function drawBackgroundCity(){
-   fill(255)
+   
    for (i=1;i<100;i++){
-      rect((100*i)+(tSeconds*-500),backgroundCityData[i+100],backgroundCityData[i],200)
+      fill(70)
+      rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-100),  //x
+      (500+(i*-4.7))+(tSeconds*8.5),                                       //y
+      backgroundCityData[i],                    //w
+      -backgroundCityData[i+300]*3)                                      //h
+      fill(60)
+      
+      rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-200),  //x
+      (600+(i*-4.7))+(tSeconds*17),                                       //y
+      backgroundCityData[i],                    //w
+      -backgroundCityData[i+300]*3)                                      //h
    }
-   rect(50,50,100,100)
+
 
 }
 
