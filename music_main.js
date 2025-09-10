@@ -18,6 +18,8 @@ let boundaryLo = [660,820,1475,640] //in X3,Y3,X4,Y4. This defines the bottom ha
 
 let guardrailOffset = 0;
 
+let centerlineOffset = 0;
+
 let speedLinesLife = []
 
 let speedLinesLocation = []
@@ -27,14 +29,15 @@ let speedLinesCount = 20;
 
 
 for (i=0;i<speedLinesCount;i++){
-   speedLinesLife[i] = //Math.random()
-   i*1/speedLinesCount
+   speedLinesLife[i] = Math.random()*2
+   //i*1/speedLinesCount
    
 }
 
 
 for (i=0;i<speedLinesLocation;i++){
-   speedLinesLocation[i] = Math.random()
+   speedLinesLocation[i] = //Math.random()
+   i*1/speedLinesCount
 }
 
 
@@ -61,7 +64,6 @@ let shotc;
 
 //width and height are a thing
 
-//RAIN BLUEPRINT
 
 
 
@@ -80,12 +82,11 @@ function speedLines(){
       stroke(speedLinesLife[i]*60)
 
 
-      line(
-         (1920+(speedLinesLife[i]*-1000))-speedLinesLocation[i]*1000,
+      line( 
+         (1920+(speedLinesLife[i]*-1000))-speedLinesLocation[i]*1000, 
          600-(speedLinesLife[i]*-(250-(speedLinesLocation[i])*150)), 
          (1970+(speedLinesLife[i]*-1000))-speedLinesLocation[i]*1000,
          590-(speedLinesLife[i]*-(250-(speedLinesLocation[i])*150))
-         
       )
       
       speedLinesLife[i] = speedLinesLife[i] + 0.03
@@ -119,6 +120,25 @@ function guardrailAnim(){
    }
    //console.log(guardrailOffset)
 }
+
+function yellowlineAnim(){
+   fill(255,255,0,255)
+   rect(
+      2200-((centerlineOffset*40)**2.3),
+      150-(centerlineOffset*-1000),
+      500+(centerlineOffset*1500),
+      30+(centerlineOffset*90)
+   )
+   if (tSeconds == 0){
+      centerlineOffset = 0.1;
+   } else {
+      centerlineOffset = centerlineOffset + 0.011
+      if (centerlineOffset > 1 || centerlineOffset < 0)
+         centerlineOffset = 0;
+   }
+}
+
+
 
 function drawEnv(){
    fill(10,10,255,50);beginShape();vertex(1920,450);vertex(1920,605);vertex(396,1080);vertex(0,1080);vertex(0,680);endShape(CLOSE); //draws the road
@@ -194,6 +214,7 @@ textSize(24);
       console.log("drawing one frame!")
       speedLines();
       guardrailAnim();
+      yellowlineAnim();
       drawEnv()
       image(shota, 0, 0);
       fill(128)
