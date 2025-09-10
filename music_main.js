@@ -9,8 +9,11 @@ let boundaryTR = [100,200];
 let boundaryBL = [10,800];
 let boundaryBR = [100,800];
 
-let boundaryHi = [640,204,1475,450] //in X1,Y1,X2,Y2. This defines the top half of the box. 1-numbered points determine the top left of the box, 2-numbered points determine top right
-let boundaryLo = [660,820,1475,640] //in X3,Y3,X4,Y4. This defines the bottom half of the box. 3-numbered points determine bottom left, 4-numbered points determine bottom right
+let boundaryHi = [];
+let boundaryLo = [];
+
+//let boundaryHi = [640,204,1475,450] //in X1,Y1,X2,Y2. This defines the top half of the box. 1-numbered points determine the top left of the box, 2-numbered points determine top right
+//let boundaryLo = [660,820,1475,640] //in X3,Y3,X4,Y4. This defines the bottom half of the box. 3-numbered points determine bottom left, 4-numbered points determine bottom right
 
 //let boundaryHi = [100,200,1700,150] //oeiginal boundaries
 //let boundaryLo = [100,800,1900,900] //original boundaries
@@ -28,6 +31,10 @@ let speedLinesLocation = []
 let speedLinesCount = 20;
 
 let backgroundCityData = []
+
+let altVisBarShiftX;
+
+let altVisBarShiftY;
 
 for (i=0;i<speedLinesCount;i++){
    speedLinesLife[i] = Math.random()*2
@@ -91,7 +98,7 @@ function speedLines(){
 }
 
 function guardrailAnim(){
-   fill(255,255,255,255)
+   fill(50,50,50,255)
    rect(    //uses powers to give an illusion of perspective. aka when its "far away", it moves on the screen slower, but when its "closer", it moves on the screen faster.
       2200-((guardrailOffset*40)**2.2),
       380-(guardrailOffset*-105),
@@ -102,14 +109,14 @@ function guardrailAnim(){
       guardrailOffset = 0;
    } else {
       guardrailOffset = guardrailOffset + 0.01
-      if (guardrailOffset > 1 || guardrailOffset < 0)
-         guardrailOffset = 0;
+      if (guardrailOffset > 1 || guardrailOffset < 0.3)
+         guardrailOffset = 0.3;
    }
    //console.log(guardrailOffset)
 }
 
 function whitelineAnim(){
-   fill(155,155,0,255)
+   fill(200,200,200,255)
    rect(
       2200-((centerlineOffset*40)**2.3),
       150-(centerlineOffset*-1000),
@@ -119,7 +126,7 @@ function whitelineAnim(){
    if (tSeconds == 0){
       centerlineOffset = 0.1;
    } else {
-      centerlineOffset = centerlineOffset + 0.011
+      centerlineOffset = centerlineOffset + 0.02
       if (centerlineOffset > 1 || centerlineOffset < 0)
          centerlineOffset = 0;
    }
@@ -129,7 +136,7 @@ function yellowlineAnim(){
 
    if (tSeconds == 0){
       centerlineOffset = 0.1;
-      fill(255,255,255,255)
+      fill(155,155,0,255)
       beginShape();
       vertex(1920,381)
       vertex(1920,566)
@@ -138,8 +145,8 @@ function yellowlineAnim(){
       endShape(CLOSE);
    } else {
       if (centerlineOffset < 1){
-         centerlineOffset = centerlineOffset + 0.011
-         fill(255,255,255,255)
+         centerlineOffset = centerlineOffset + 0.01
+         fill(155,155,0,255)
          beginShape();
          vertex(1920,600)
          vertex(1920,500)
@@ -148,6 +155,7 @@ function yellowlineAnim(){
          vertex((2200-((centerlineOffset*40)**2.3))+(centerlineOffset*50)**2,(150-(centerlineOffset*-1000)))
          endShape(CLOSE);
       } else {
+         fill(155,155,0,255);
          beginShape();  //draws center lane
          vertex(1920,553);
          vertex(1920,566);
@@ -210,7 +218,8 @@ function drawEnv(){
    beginShape();
    vertex(1920,566);
    vertex(1920,605);
-   vertex(396,1080); 
+   //vertex(396,1080); 
+   vertex(1920,1080)
    vertex(0,1080);
    vertex(0,1068)
    endShape(CLOSE);
@@ -242,16 +251,17 @@ function drawEnv(){
 
 function drawBackgroundCity(){
    
-   for (i=1;i<100;i++){
+   for (i=1;i<1000;i++){
       fill(70)
       rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-100),          //x
       (500+(i*-4.7))+(tSeconds*8.5),                                       //y
       backgroundCityData[i],                                         //w
       -backgroundCityData[i+300]*3)                                      //h
-      fill(60)
+      
 
    }
    for (i=1;i<1000;i++){
+      fill(60)
       rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-200),           //x
       (600+(i*-4.7))+(tSeconds*17),                                       //y
       backgroundCityData[i],                                           //w
@@ -261,151 +271,14 @@ function drawBackgroundCity(){
 
 }
 
-function shotadrawcar(){
-   fill(255,0,0)
-}
 
-
-
-
-
-function draw_one_frame(words, vocal, drum, bass, other, counter) {
-background(5)
-textFont('Verdana'); // please use CSS safe fonts
-//rectMode(CENTER)
-textSize(24);
-
-
-
-
-   //for 2nd visualizer
-
-   remapBass = map(bass,50,100,0,1)
-   remapVocal = map(vocal,0,100,0,1)
-   remapDrum = map(drum,50,100,0,1)
-   remapOther = map(other,50,100,0,1)
-
-   if(firstrun){
-      shota = loadImage('assets/shota.png')
-      shotb = loadImage('assets/shotb.png')
-      shotc = loadImage('assets/shotc.jpg')
-      console.log(speedLinesLife)
-      firstrun = false;
-
-      for (i=1;i<1000;i++){                                 //generates a thousand lines of random numbers that can be used for making a city
-         backgroundCityData.push(50+(Math.random()*50))
-         console.log(backgroundCityData)
-      }
-   }
-
-   tSeconds = round(counter/60,5)
-   
-   //scene switcher
-
-   if (tSeconds > -1){
-      console.log("drawing one frame!")
-
-      /*the layering should be in this order!
-
-      lineFill ON BOTTOM LAYER 
-      guardrailAnim, yellowlineAnim, whitelineAnim 
-      drawEnv
-      speedLines
-      drawCarShadow
-      drawCar ON TOP
-
-      */
-      drawBackgroundCity();
-      centerlineFill();
-      guardrailAnim();
-      //yellowlineAnim();
-      whitelineAnim();
-      drawEnv()
-      speedLines();
-
-      drawCarShadow();
-
-      image(shota, 0, 0);
-      fill(128)
-      text("scene 1, shot a showroom lights off", 50, 100)
-      fill(255,0,0)
-      
-
-
-      
-   
-      shotadrawcar()
-      text(mouseX + ", " + mouseY, 50, 200)
-
-
-
-      
-   }/* else if (tSeconds >= 15 && tSeconds < 30){
-      image(shota,0,0);
-      text("scene 2, shot a showroom lights on", 50, 100)
-      
-   } else if (tSeconds >= 30 && tSeconds < 44.7){
-      image(shota,0,0)
-      text("scene 3, shot a overcast", 50, 100)
-
-   } else if (tSeconds >= 44.7 && tSeconds < 59.5){
-      image(shotb,0,0)
-      text("scene 4, shot b raining", 50, 100)
-
-   } else if (tSeconds >= 59.5 && tSeconds < 74.3){   
-      image(shotb,0,0)
-      text("scene 5, shot b snowing",50,100)
-
-   } else if (tSeconds >= 74.3 && tSeconds < 89.1){
-      image(shotc,0,0)
-      text("scene 6, shot c snowing",50,100)
-
-   } else if (tSeconds >= 89.1 && tSeconds < 118.5){
-      image(shotc,0,0)
-      text("scene 7, shot c raining",50,100)
-   } else if (tSeconds >=118.5 && tSeconds < 125.9){
-      image(shota,0,0)
-      text("scene 8, shot a tunnel",50,100)
-   } else if (tSeconds >= 125.9){
-      image(shota,0,0)
-      text("scene 9, shot a overcast",50,100)
-   }*/
-
-   text(tSeconds + " seconds elapsed", 50, 50)
-
-
-
-
-   beginShape();
-   vertex(894,885); //bottom left 894 885
-   vertex(974,904); //bottom right 974 904
-
-
-   vertex(
-      (974 + (1743 - 974) * remapOther),
-      (904 + (663-904) * remapOther)
-   )
-
-
-
-   vertex(
-      (894 + (1690 - 894)*remapOther),
-      (885 + (649-885)*remapOther)
-   )
-   
-   //vertex(1743,663); //top right
-   //vertex(1690,649); //top left
-   endShape(CLOSE);
-   
-
-   //x1 + (x2-x1) * p where p is the percentage alogn the line
-
+function visBar(boundaryHi, boundaryLo, ghostArrayDrum) {
    for (i=1;i<13;i++){ //how many lines are there
 
       fill(0,255,0,5); //This fills in the boundaries. used for testing
       //beginShape();vertex(boundaryHi[0],boundaryHi[1]); vertex(boundaryHi[2],boundaryHi[3]);vertex(boundaryLo[2],boundaryLo[3]);vertex(boundaryLo[0],boundaryLo[1]);endShape(CLOSE);
       
-      fill(200,0,0,0+50+(ghostArrayBass[(ghostArrayBass.length)-(i)])*170) // <- colour here!
+      fill(200,0,0,0+50+30+((ghostArrayDrum[(ghostArrayDrum.length)-(i)])*170)) // <- colour here!
       strokeWeight(0);
 
       //ghostArrayBass[(ghostArrayBass.length)-(i)] <- find volume values here
@@ -476,6 +349,176 @@ textSize(24);
       line()
 
    }
+}
+
+function altVisBar(x,y,z,o,p){ //X and Y are respective offsets. Z is var that it is taking the value from (like remapOther, remapVocals). O and P moves the X and Y of top end of the bar
+
+   if (x === undefined){
+      x = 0 
+   }
+   if (y === undefined){
+      y = 0
+   }
+   if (z === undefined){
+      z === remapOther
+   }
+   if (o === undefined){
+      o = 0
+   }
+   if (p === undefined){
+      p = 0
+   }
+
+   fill(255,0,0,100+(z-0.5)*155)
+
+   beginShape();
+   vertex(894 + x,885 + y); //bottom left 894 885
+   vertex(974 + x,904 + y); //bottom right 974 904
+   vertex(
+      ((974 + ((1743+p) - 974) * z) + x+0 - 0),
+      ((904 + ((663 + o)-904) * z) + y+0 - 0)
+   )
+   vertex(
+      ((894 + ((1690+p) - 894)*z) + x+0 - 0),
+      ((885 + ((649 + o)-885)*z) + y+0 - 0)
+   )
+   //vertex(1743,663); //top right
+   //vertex(1690,649); //top left
+   endShape(CLOSE);
+   
+}
+
+
+
+function draw_one_frame(words, vocal, drum, bass, other, counter) {
+background(5)
+textFont('Verdana'); // please use CSS safe fonts
+//rectMode(CENTER)
+textSize(24);
+
+
+
+
+   //for 2nd visualizer
+
+   remapBass = map(bass,50,100,0,1)
+   remapVocal = map(vocal,0,100,0,1)
+   remapDrum = map(drum,50,100,0,1)
+   remapOther = map(other,50,100,0,1)
+
+   if(firstrun){
+      shota = loadImage('assets/shota.png')
+      shotb = loadImage('assets/shotb.png')
+      shotc = loadImage('assets/shotc.jpg')
+      console.log(speedLinesLife)
+      firstrun = false;
+
+      for (i=1;i<1000;i++){                                 //generates a thousand lines of random numbers that can be used for making a city
+         backgroundCityData.push(50+(Math.random()*50))
+         console.log(backgroundCityData)
+      }
+   }
+
+   tSeconds = round(counter/60,5)
+   
+   //scene switcher
+
+   if (tSeconds > -1){
+      console.log("drawing one frame!")
+
+      let boundaryHi = [640,204,1475,450] 
+      let boundaryLo = [660,820,1475,640]
+
+
+      /*the layering should be in this order!
+
+      lineFill ON BOTTOM LAYER 
+      guardrailAnim, yellowlineAnim, whitelineAnim 
+      drawEnv
+      speedLines
+      drawCarShadow
+      drawCar ON TOP
+
+      */
+      drawBackgroundCity();
+      centerlineFill();
+      guardrailAnim();
+      yellowlineAnim();
+      //whitelineAnim();
+      drawEnv()
+      altVisBar(0,0,remapOther)
+      altVisBar(200,50,remapVocal,-10,-50)
+      altVisBar(100,25,remapBass, -5, -25)
+      speedLines();
+
+      drawCarShadow();
+
+      image(shota, 0, 0);
+      fill(128)
+      text("scene 1, shot a showroom lights off", 50, 100)
+      fill(255,0,0)
+      
+
+   
+      text(mouseX + ", " + mouseY, 50, 200)
+      
+      visBar(boundaryHi,boundaryLo,ghostArrayDrum)
+
+   } else if (tSeconds >= 90 && tSeconds < 180){
+      image(shota,0,0);
+      text("scene 2, shot a showroom lights on", 50, 100)
+   }
+   /*} else if (tSeconds >= 30 && tSeconds < 44.7){
+      image(shota,0,0)
+      text("scene 3, shot a overcast", 50, 100)
+
+   } else if (tSeconds >= 44.7 && tSeconds < 59.5){
+      image(shotb,0,0)
+      text("scene 4, shot b raining", 50, 100)
+
+   } else if (tSeconds >= 59.5 && tSeconds < 74.3){   
+      image(shotb,0,0)
+      text("scene 5, shot b snowing",50,100)
+
+   } else if (tSeconds >= 74.3 && tSeconds < 89.1){
+      image(shotc,0,0)
+      text("scene 6, shot c snowing",50,100)
+
+   } else if (tSeconds >= 89.1 && tSeconds < 118.5){
+      image(shotc,0,0)
+      text("scene 7, shot c raining",50,100)
+   } else if (tSeconds >=118.5 && tSeconds < 125.9){
+      image(shota,0,0)
+      text("scene 8, shot a tunnel",50,100)
+   } else if (tSeconds >= 125.9){
+      image(shota,0,0)
+      text("scene 9, shot a overcast",50,100)
+   }*/
+
+   text(tSeconds + " seconds elapsed", 50, 50)
+
+
+
+/*
+   beginShape();
+   vertex(894,885); //bottom left 894 885
+   vertex(974,904); //bottom right 974 904
+   vertex(
+      (974 + (1743 - 974) * remapOther),
+      (904 + (663-904) * remapOther)
+   )
+   vertex(
+      (894 + (1690 - 894)*remapOther),
+      (885 + (649-885)*remapOther)
+   ) 
+   //vertex(1743,663); //top right
+   //vertex(1690,649); //top left
+   endShape(CLOSE);
+   */
+
+   //x1 + (x2-x1) * p where p is the percentage alogn the line
+
+
 
    ghostArrayBass.push(remapBass)
    ghostArrayDrum.push(remapDrum)
