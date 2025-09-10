@@ -69,13 +69,11 @@ let shotc;
 
 function speedLines(){
    
-   strokeWeight(5);
-   stroke(120);
-   color(30)
-
-   
-
-   for (i=0;i<speedLinesCount;i++){
+   if (tSeconds > 1){
+      strokeWeight(5);
+      stroke(120);
+      color(30)
+      for (i=0;i<speedLinesCount;i++){
       
       //let location of speed line = speedLineLife[i]. so,
 
@@ -98,6 +96,8 @@ function speedLines(){
    }
 
    strokeWeight(0);
+   }
+
 
 }
 
@@ -122,7 +122,7 @@ function guardrailAnim(){
 }
 
 function yellowlineAnim(){
-   fill(255,255,0,255)
+   fill(255,255,255,255)
    rect(
       2200-((centerlineOffset*40)**2.3),
       150-(centerlineOffset*-1000),
@@ -138,24 +138,88 @@ function yellowlineAnim(){
    }
 }
 
+function whitelineAnim(){
+
+   if (tSeconds == 0){
+      centerlineOffset = 0.1;
+      fill(255,0,255,255)
+      beginShape();
+      vertex(1920,381)
+      vertex(1920,566)
+      vertex((2200-((centerlineOffset*40)**2.3)),(150-(centerlineOffset*-1000)))
+      vertex((2200-((centerlineOffset*40)**2.3))+(centerlineOffset*50)**2,(150-(centerlineOffset*-1000)))
+      endShape(CLOSE);
+   } else {
+      if (centerlineOffset < 1){
+         centerlineOffset = centerlineOffset + 0.011
+         fill(255,255,255,255)
+         beginShape();
+         vertex(1920,600)
+         vertex(1920,500)
+
+         vertex((2200-((centerlineOffset*40)**2.3)),(150-(centerlineOffset*-1000)))
+         vertex((2200-((centerlineOffset*40)**2.3))+(centerlineOffset*50)**2,(150-(centerlineOffset*-1000)))
+         endShape(CLOSE);
+      } else {
+         beginShape();  //draws center lane
+         vertex(1920,553);
+         vertex(1920,566);
+         vertex(0,1068);
+         vertex(0,1029);
+         endShape(CLOSE); 
+      }
+
+      //if (centerlineOffset > 1 || centerlineOffset < 0)
+         //centerlineOffset = 0;
+   }
+}
 
 
 function drawEnv(){
-   fill(10,10,255,50);beginShape();vertex(1920,450);vertex(1920,605);vertex(396,1080);vertex(0,1080);vertex(0,680);endShape(CLOSE); //draws the road
+   fill(10,10,255,50);//fallback fill colour
+
+   fill(20);
+   
+   /*beginShape();
+   vertex(1920,450);
+   vertex(1920,605);
+   vertex(396,1080); 
+   vertex(0,1080);
+   vertex(0,680);endShape(CLOSE); //draws the road without gap for center line
+   */
+
+   beginShape();     //draws the road with gap for center line
+   vertex(1920,450);
+   vertex(1920,553);
+   vertex(0,1029);
+   vertex(0,680);
+   endShape(CLOSE);
+   beginShape();
+   vertex(1920,566);
+   vertex(1920,605);
+   vertex(396,1080); 
+   vertex(0,1080);
+   vertex(0,1068)
+   endShape(CLOSE);
+
+   fill(50);
 
    beginShape();  //draws guardrail
+   
    vertex(1920,381);
    vertex(1920,425);
    vertex(0,600);
    vertex(0,460);
    endShape(CLOSE); 
-
-   beginShape();  //draws center lane
+   
+   /*beginShape();  //draws center lane
    vertex(1920,553);
    vertex(1920,566);
    vertex(0,1068);
    vertex(0,1029);
-   endShape(CLOSE); 
+   endShape(CLOSE); */
+
+   fill(10);
    
    beginShape();  //draw shadow for car
    vertex(1125,605);
@@ -214,7 +278,8 @@ textSize(24);
       console.log("drawing one frame!")
       speedLines();
       guardrailAnim();
-      yellowlineAnim();
+      //yellowlineAnim();
+      whitelineAnim();
       drawEnv()
       image(shota, 0, 0);
       fill(128)
