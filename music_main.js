@@ -1,8 +1,7 @@
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 
-let wValue = 0.06;      //Changes width of visualizer bars
-let wInfluence = 0.002; //Changes influence of i. Basically determines how thick each visualizer bar is
+
 
 let boundaryTL = [10,200];
 let boundaryTR = [100,200];
@@ -252,7 +251,7 @@ function drawEnv(){
 function drawBackgroundCity(){
    
    for (i=1;i<1000;i++){
-      fill(70)
+      fill(30)
       rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-100),          //x
       (500+(i*-4.7))+(tSeconds*8.5),                                       //y
       backgroundCityData[i],                                         //w
@@ -261,7 +260,7 @@ function drawBackgroundCity(){
 
    }
    for (i=1;i<1000;i++){
-      fill(60)
+      fill(40)
       rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-200),           //x
       (600+(i*-4.7))+(tSeconds*17),                                       //y
       backgroundCityData[i],                                           //w
@@ -272,7 +271,7 @@ function drawBackgroundCity(){
 }
 
 
-function visBar(boundaryHi, boundaryLo, ghostArrayDrum) {
+function visBar(boundaryHi, boundaryLo, ghostArrayDrum, wValue, wInfluence) {
    for (i=1;i<13;i++){ //how many lines are there
 
       fill(0,255,0,5); //This fills in the boundaries. used for testing
@@ -423,7 +422,7 @@ textSize(24);
    
    //scene switcher
 
-   if (tSeconds > -1){
+   if (tSeconds < -3){
       console.log("drawing one frame!")
 
       let boundaryHi = [640,204,1475,450] 
@@ -438,7 +437,6 @@ textSize(24);
       speedLines
       drawCarShadow
       drawCar ON TOP
-
       */
       drawBackgroundCity();
       centerlineFill();
@@ -450,23 +448,42 @@ textSize(24);
       altVisBar(200,50,remapVocal,-10,-50)
       altVisBar(100,25,remapBass, -5, -25)
       speedLines();
-
       drawCarShadow();
-
       image(shota, 0, 0);
       fill(128)
       text("scene 1, shot a showroom lights off", 50, 100)
       fill(255,0,0)
       
-
-   
       text(mouseX + ", " + mouseY, 50, 200)
       
       visBar(boundaryHi,boundaryLo,ghostArrayDrum)
 
-   } else if (tSeconds >= 90 && tSeconds < 180){
-      image(shota,0,0);
+   } else if (tSeconds >= -2 && tSeconds < 180){
+      fill(255)
+      //image(shota,0,0);
       text("scene 2, shot a showroom lights on", 50, 100)
+      text(mouseX + ", " + mouseY, 50, 200)
+      rectMode(CENTER)
+      rect(960,700,1000,700)
+
+      
+      let wValue = 0.08;      //Changes width of visualizer bars
+      let wInfluence = 0.000; //Changes influence of i. Basically determines how thick each visualizer bar is
+
+      let boundaryHi = [500,600,1280,920]
+      let boundaryLo = [500,1000,1280,1000]
+
+      fill(255,0,0)
+
+      rectMode(CORNER)
+      fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*255)
+      rect(1420,600, -500*remapOther, 50)
+      rect(1420,675, -500*remapVocal, 50)
+
+      //beginShape();vertex(boundaryHi[0],boundaryHi[1]); vertex(boundaryHi[2],boundaryHi[3]);vertex(boundaryLo[2],boundaryLo[3]);vertex(boundaryLo[0],boundaryLo[1]);endShape(CLOSE);
+
+      visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence)
+      
    }
    /*} else if (tSeconds >= 30 && tSeconds < 44.7){
       image(shota,0,0)
@@ -496,28 +513,6 @@ textSize(24);
    }*/
 
    text(tSeconds + " seconds elapsed", 50, 50)
-
-
-
-/*
-   beginShape();
-   vertex(894,885); //bottom left 894 885
-   vertex(974,904); //bottom right 974 904
-   vertex(
-      (974 + (1743 - 974) * remapOther),
-      (904 + (663-904) * remapOther)
-   )
-   vertex(
-      (894 + (1690 - 894)*remapOther),
-      (885 + (649-885)*remapOther)
-   ) 
-   //vertex(1743,663); //top right
-   //vertex(1690,649); //top left
-   endShape(CLOSE);
-   */
-
-   //x1 + (x2-x1) * p where p is the percentage alogn the line
-
 
 
    ghostArrayBass.push(remapBass)
