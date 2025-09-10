@@ -244,15 +244,17 @@ function drawBackgroundCity(){
    
    for (i=1;i<100;i++){
       fill(70)
-      rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-100),  //x
+      rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-100),          //x
       (500+(i*-4.7))+(tSeconds*8.5),                                       //y
-      backgroundCityData[i],                    //w
+      backgroundCityData[i],                                         //w
       -backgroundCityData[i+300]*3)                                      //h
       fill(60)
-      
-      rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-200),  //x
+
+   }
+   for (i=1;i<1000;i++){
+      rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-200),           //x
       (600+(i*-4.7))+(tSeconds*17),                                       //y
-      backgroundCityData[i],                    //w
+      backgroundCityData[i],                                           //w
       -backgroundCityData[i+300]*3)                                      //h
    }
 
@@ -371,84 +373,94 @@ textSize(24);
 
    text(tSeconds + " seconds elapsed", 50, 50)
 
-for (i=1;i<13;i++){ //how many lines are there
 
-   fill(0,255,0,5); //This fills in the boundaries. used for testing
-   //beginShape();vertex(boundaryHi[0],boundaryHi[1]); vertex(boundaryHi[2],boundaryHi[3]);vertex(boundaryLo[2],boundaryLo[3]);vertex(boundaryLo[0],boundaryLo[1]);endShape(CLOSE);
-   
-   fill(200,0,0,0+(ghostArrayBass[(ghostArrayBass.length)-(i)])*170) // <- colour here!
-   strokeWeight(0);
+   beginShape();
+   vertex(964,860);
+   vertex(1041,883);
+   vertex(1743,663);
+   vertex(1690,649);
+   endShape(CLOSE);
 
-   //ghostArrayBass[(ghostArrayBass.length)-(i)] <- find volume values here
+   for (i=1;i<13;i++){ //how many lines are there
 
-   p = (i-1)/10; //how far along the line you want to be, controlled by i. if you want to change how many lines FIT within the boundaries, change this value
-   w = wValue-(i*wInfluence); // how wide you want each bar to be
+      fill(0,255,0,5); //This fills in the boundaries. used for testing
+      //beginShape();vertex(boundaryHi[0],boundaryHi[1]); vertex(boundaryHi[2],boundaryHi[3]);vertex(boundaryLo[2],boundaryLo[3]);vertex(boundaryLo[0],boundaryLo[1]);endShape(CLOSE);
+      
+      fill(200,0,0,0+50+(ghostArrayBass[(ghostArrayBass.length)-(i)])*170) // <- colour here!
+      strokeWeight(0);
+
+      //ghostArrayBass[(ghostArrayBass.length)-(i)] <- find volume values here
 
 
-   let vertBLX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p //BL -> Bottom Left, X -> X axis
-   let vertBLY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*p
 
-   let vertBRX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w)
-   let vertBRY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)
+      p = (i-1)/10; //how far along the line you want to be, controlled by i. if you want to change how many lines FIT within the boundaries, change this value
+      w = wValue-(i*wInfluence); // how wide you want each bar to be
 
-   let vertTRX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w)
-   let vertTRY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)
 
-   let vertTLX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*p
-   let vertTLY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
+      let vertBLX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p //BL -> Bottom Left, X -> X axis
+      let vertBLY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*p
 
-   beginShape()
-   vertex( //THIS IS THE TOP RIGHT CORNER
-      Math.min(
-         (
-            (vertBRX) /*X1*/
-            +((vertTRX) /*X2*/ 
-            -(vertBRX) /*X1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
+      let vertBRX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w)
+      let vertBRY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)
+
+      let vertTRX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w)
+      let vertTRY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)
+
+      let vertTLX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*p
+      let vertTLY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
+
+      beginShape()
+      vertex( //THIS IS THE TOP RIGHT CORNER
+         Math.min(
+            (
+               (vertBRX) /*X1*/
+               +((vertTRX) /*X2*/ 
+               -(vertBRX) /*X1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
+            )
+         ,vertBRX) //2nd argument in Math.min. Prevents it from going below minimum.
+         ,
+         Math.min(
+            (
+               (vertBRY) /*X*/
+               +((vertTRY) /*Y2*/ 
+               -(vertBRY) /*Y1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
+            )
+            ,vertBRY //2nd arg in Math.min
          )
-      ,vertBRX) //2nd argument in Math.min. Prevents it from going below minimum.
-      ,
-      Math.min(
-         (
-            (vertBRY) /*X*/
-            +((vertTRY) /*Y2*/ 
-            -(vertBRY) /*Y1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
+      ); //end of Math.min
+
+      vertex(vertBRX,vertBRY); /*Bottom right vert*/
+      vertex(vertBLX,vertBLY); /*Bottom left vert*/
+
+      vertex( //THIS IS THE TOP LEFT CORNER. same code as the top right corner but any R in vert variables are changed to L
+         Math.min(
+            (
+               (vertBLX) /*X1*/
+               +((vertTLX) /*X2*/ 
+               -(vertBLX) /*X1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
+            ),
+            vertBLX //2nd arg in Math.min
+         ), 
+
+         Math.min(
+            (
+               (vertBLY) /*Y1*/
+               +((vertTLY) /*Y2*/ 
+               -(vertBLY) /*Y1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
+            )
+            ,vertBLY //2nd arg in Math.min
          )
-         ,vertBRY //2nd arg in Math.min
-      )
-   ); //end of Math.min
+      );
 
-   vertex(vertBRX,vertBRY); /*Bottom right vert*/
-   vertex(vertBLX,vertBLY); /*Bottom left vert*/
+      endShape(CLOSE)
 
-   vertex( //THIS IS THE TOP LEFT CORNER. same code as the top right corner but any R in vert variables are changed to L
-      Math.min(
-         (
-            (vertBLX) /*X1*/
-            +((vertTLX) /*X2*/ 
-            -(vertBLX) /*X1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
-         ),
-         vertBLX //2nd arg in Math.min
-      ), 
+      line()
 
-      Math.min(
-         (
-            (vertBLY) /*Y1*/
-            +((vertTLY) /*Y2*/ 
-            -(vertBLY) /*Y1*/ ) * ghostArrayDrum[(ghostArrayDrum.length)-(i)]
-         )
-         ,vertBLY //2nd arg in Math.min
-      )
-   );
+   }
 
-   endShape(CLOSE)
-
-   line()
-
-}
-
-ghostArrayBass.push(remapBass)
-ghostArrayDrum.push(remapDrum)
-ghostArrayOther.push(remapOther)
+   ghostArrayBass.push(remapBass)
+   ghostArrayDrum.push(remapDrum)
+   ghostArrayOther.push(remapOther)
 
 
 
