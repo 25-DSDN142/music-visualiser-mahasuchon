@@ -70,14 +70,14 @@ let shotc;
 function speedLines(){
    
    if (tSeconds > 1){
-      strokeWeight(5);
+      strokeWeight(3);
       stroke(120);
       color(30)
       for (i=0;i<speedLinesCount;i++){
       
       //let location of speed line = speedLineLife[i]. so,
 
-      stroke(speedLinesLife[i]*60)
+      stroke(60,60,60,speedLinesLife[i]*255)
 
 
       line( 
@@ -174,6 +174,16 @@ function whitelineAnim(){
    }
 }
 
+function centerlineFill(){ 
+   fill(20)
+   beginShape();  //draws center lane
+   vertex(1920,551);
+   vertex(1920,568);
+   vertex(0,1070);
+   vertex(0,1027);
+   endShape(CLOSE);
+}
+
 
 function drawEnv(){
    fill(10,10,255,50);//fallback fill colour
@@ -205,12 +215,19 @@ function drawEnv(){
    fill(50);
 
    beginShape();  //draws guardrail
-   
    vertex(1920,381);
    vertex(1920,425);
    vertex(0,600);
    vertex(0,460);
    endShape(CLOSE); 
+   fill(45);
+   beginShape();
+   vertex(1920,391);
+   vertex(1920,415);
+   vertex(0,580);
+   vertex(0,480);
+   endShape(CLOSE); 
+   fill(50);
    
    /*beginShape();  //draws center lane
    vertex(1920,553);
@@ -276,15 +293,29 @@ textSize(24);
 
    if (tSeconds > -1){
       console.log("drawing one frame!")
-      speedLines();
+
+      /*the layering should be in this order!
+
+      lineFill ON BOTTOM LAYER 
+      guardrailAnim, yellowlineAnim, whitelineAnim 
+      drawEnv
+      speedLines
+      drawCar ON TOP
+
+      */
+      centerlineFill();
       guardrailAnim();
       //yellowlineAnim();
       whitelineAnim();
       drawEnv()
+      speedLines();
+
       image(shota, 0, 0);
       fill(128)
       text("scene 1, shot a showroom lights off", 50, 100)
       fill(255,0,0)
+      
+
 
       
    
