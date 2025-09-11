@@ -270,7 +270,6 @@ function drawBackgroundCity(){
 
 }
 
-
 function visBar(boundaryHi, boundaryLo, ghostArrayDrum, wValue, wInfluence) {
    for (i=1;i<13;i++){ //how many lines are there
 
@@ -387,11 +386,142 @@ function altVisBar(x,y,z,o,p){ //X and Y are respective offsets. Z is var that i
    
 }
 
+function segDisplay(x,y,a,b,n) { //X and Y are offsets, A and B are x/y scaling, N is the number you call (0 to 9)
 
+   if (x === undefined){
+      x = 0 
+   }
+
+   if (y === undefined){
+      y = 0 
+   }
+
+   if (n === undefined){
+      n = 0
+   }
+
+   if (a === undefined){
+      a = 1
+   }
+
+   if (b === undefined){
+      b = 1
+   }
+
+
+
+   push();
+   translate(x-10,y-10);
+   scale(a,b)
+   strokeWeight(4);
+   stroke(255);
+
+
+   /*
+   line(10,10,10,35); //TL vert
+   line(15,5,35,5);  //top horizontal
+   line(40,10,40,35); //TR vert
+   line(15,40,35,40);  //middle horizontal
+   line(10,45,10,70); //BL vert
+   line(15,75,35,75);  //bottom horizontal
+   line(40,45,40,70); //BR vert
+   */
+
+   if (n == 0) {
+      line(10,10,10,35); //TL vert
+      line(15,5,35,5);  //top horizontal
+      line(40,10,40,35); //TR vert
+      line(10,45,10,70); //BL vert
+      line(15,75,35,75);  //bottom horizontal
+      line(40,45,40,70); //BR vert
+   }
+
+   if (n == 1) {
+      line(40,10,40,35); //TR vert
+      line(40,45,40,70); //BR vert
+   }
+   
+   if (n == 2) {
+      line(15,5,35,5);  //top horizontal
+      line(40,10,40,35); //TR vert
+      line(15,40,35,40);  //middle horizontal
+      line(10,45,10,70); //BL vert
+      line(15,75,35,75);  //bottom horizontal
+   }
+
+   if (n == 3) {
+      line(15,5,35,5);  //top horizontal
+      line(40,10,40,35); //TR vert
+      line(15,40,35,40);  //middle horizontal
+      line(40,45,40,70); //BR vert
+      line(15,75,35,75);  //bottom horizontal
+   }
+
+   if (n == 4) {
+      line(10,10,10,35); //TL vert
+
+      line(40,10,40,35); //TR vert
+      line(15,40,35,40);  //middle horizontal
+
+
+      line(40,45,40,70); //BR vert
+   }
+
+   if (n == 5) {
+      line(10,10,10,35); //TL vert
+      line(15,5,35,5);  //top horizontal
+
+      line(15,40,35,40);  //middle horizontal
+
+      line(15,75,35,75);  //bottom horizontal
+      line(40,45,40,70); //BR vert
+   }
+
+   if (n == 6) {
+      line(10,10,10,35); //TL vert
+      line(15,5,35,5);  //top horizontal
+
+      line(15,40,35,40);  //middle horizontal
+      line(10,45,10,70); //BL vert
+      line(15,75,35,75);  //bottom horizontal
+      line(40,45,40,70); //BR vert
+   }
+
+   if (n == 7) {
+
+      line(15,5,35,5);  //top horizontal
+      line(40,10,40,35); //TR vert
+
+
+      line(40,45,40,70); //BR vert  
+   }
+
+   if (n == 8) {
+      line(10,10,10,35); //TL vert
+      line(15,5,35,5);  //top horizontal
+      line(40,10,40,35); //TR vert
+      line(15,40,35,40);  //middle horizontal
+      line(10,45,10,70); //BL vert
+      line(15,75,35,75);  //bottom horizontal
+      line(40,45,40,70); //BR vert
+   }
+
+   if (n == 9) {
+      line(10,10,10,35); //TL vert
+      line(15,5,35,5);  //top horizontal
+      line(40,10,40,35); //TR vert
+      line(15,40,35,40);  //middle horizontal
+
+      line(15,75,35,75);  //bottom horizontal
+      line(40,45,40,70); //BR vert
+   }
+
+   pop();
+}
 
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
 background(5)
-textFont('Verdana'); // please use CSS safe fonts
+textFont("Courier New"); // please use CSS safe fonts
 //rectMode(CENTER)
 textSize(24);
 
@@ -422,12 +552,14 @@ textSize(24);
    
    //scene switcher
 
-   if (tSeconds < -3){
+   if (tSeconds < -1){
       console.log("drawing one frame!")
 
       let boundaryHi = [640,204,1475,450] 
       let boundaryLo = [660,820,1475,640]
 
+      let wValue = 0.08;      //Changes width of visualizer bars
+      let wInfluence = 0.003; //Changes influence of i. Basically determines how thick each visualizer bar is
 
       /*the layering should be in this order!
 
@@ -438,6 +570,8 @@ textSize(24);
       drawCarShadow
       drawCar ON TOP
       */
+
+
       drawBackgroundCity();
       centerlineFill();
       guardrailAnim();
@@ -456,35 +590,104 @@ textSize(24);
       
       text(mouseX + ", " + mouseY, 50, 200)
       
-      visBar(boundaryHi,boundaryLo,ghostArrayDrum)
+      visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence)
 
-   } else if (tSeconds >= -2 && tSeconds < 180){
-      fill(255)
-      //image(shota,0,0);
-      text("scene 2, shot a showroom lights on", 50, 100)
-      text(mouseX + ", " + mouseY, 50, 200)
-      rectMode(CENTER)
-      rect(960,700,1000,700)
-
+   } else 
       
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      if (tSeconds >= -1 && tSeconds < 180){
+
+
+
       let wValue = 0.08;      //Changes width of visualizer bars
       let wInfluence = 0.000; //Changes influence of i. Basically determines how thick each visualizer bar is
 
       let boundaryHi = [500,600,1280,920]
       let boundaryLo = [500,1000,1280,1000]
 
+      fill(255)
+      //image(shota,0,0);
+      text("scene 2, shot a showroom lights on", 50, 100)
+      text(mouseX + ", " + mouseY, 50, 200)
+      rectMode(CENTER)
+      rect(960,700,1000,700)
+      rectMode(CORNER)
+      
+      fill(230);
+      
+      beginShape();vertex(boundaryHi[0]-20,boundaryHi[1]-20); vertex(1440,975);vertex(1440,boundaryLo[1]+10);vertex(boundaryLo[0]-20,boundaryLo[1]+10);endShape(CLOSE);
+      
+      rect(1440,380,-540,100)
+      rect(480,380,400,100)
+
+      fill(220);
+      rect(490,390,380,80)
+
+
       fill(255,0,0)
 
-      rectMode(CORNER)
       fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*255)
-      rect(1420,600, -500*remapOther, 50)
-      rect(1420,675, -500*remapVocal, 50)
+      rect(1420,400, -500*Math.max(remapOther,0), 20)
+      rect(1420,440, -500*remapVocal, 20)
 
-      //beginShape();vertex(boundaryHi[0],boundaryHi[1]); vertex(boundaryHi[2],boundaryHi[3]);vertex(boundaryLo[2],boundaryLo[3]);vertex(boundaryLo[0],boundaryLo[1]);endShape(CLOSE);
+
+
+      //beginShape();vertex(boundaryHi[0]-20,boundaryHi[1]-20); vertex(1440,975);vertex(1440,boundaryLo[1]+10);vertex(boundaryLo[0]-20,boundaryLo[1]+10);endShape(CLOSE);
 
       visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence)
+
+
+      //segDisplay(300,408,1,0.8,Math.floor(tSeconds*10)%10);
+
+         
+      segDisplay(650,408,1,0.8,Math.floor(tSeconds%60)%10);
+      segDisplay(610,408,1,0.8,Math.floor((tSeconds%60)/10));
+      segDisplay(550,408,1,0.8,Math.floor((tSeconds/60)%10));
+      segDisplay(510,408,1,0.8,Math.floor((tSeconds/60)%10));
+
+
       
+      fill(255,0,0,(((Math.floor(tSeconds*10)%10)/10)*-255)+255); //the logic to have the flashing second thing
+      circle(595,440,10)
+      circle(595,420,10)
    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    /*} else if (tSeconds >= 30 && tSeconds < 44.7){
       image(shota,0,0)
       text("scene 3, shot a overcast", 50, 100)
