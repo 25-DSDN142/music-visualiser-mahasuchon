@@ -414,7 +414,7 @@ function segDisplay(x,y,a,b,n) { //X and Y are offsets, A and B are x/y scaling,
    translate(x-10,y-10);
    scale(a,b)
    strokeWeight(4);
-   stroke(255);
+
 
 
    /*
@@ -653,18 +653,83 @@ textSize(24);
 
 
       //segDisplay(300,408,1,0.8,Math.floor(tSeconds*10)%10);
+      textSize(20)
+      textAlign(RIGHT)
+      textFont("Courier New")
+      text("AUX/BT", 860,415)
+      text("AM/FM", 860,438)
+      text("CLOCK", 860,460)
 
-         
+      stroke(200,0,0)
       segDisplay(650,408,1,0.8,Math.floor(tSeconds%60)%10);
       segDisplay(610,408,1,0.8,Math.floor((tSeconds%60)/10));
       segDisplay(550,408,1,0.8,Math.floor((tSeconds/60)%10));
-      segDisplay(510,408,1,0.8,Math.floor((tSeconds/60)%10));
+      segDisplay(510,408,1,0.8,Math.floor((tSeconds/60)%10));  
 
+      fill(100)
 
+      circle(500,170,250)  // a/c control panel
+      circle(1420,170,250)
+      rect(500,45,920,250) 
+
+      fill(200)
+      circle(500,170,200) //left knob
+      circle(1420,170,200) //right knob
+      rectMode(CENTER)
+      stroke(0)
+
+      fill(150)
+      rect(960,210,620,120,20)         // AC CONTROL BUTTONS 
+      strokeWeight(3)
+      strokeCap(SQUARE)
+      //line(710,202,1210,202)
+      for (i=1;i<5;i++) {
+         strokeWeight(3)
+         line(650+124*i,200,650+124*i,270)
+      }
       
-      fill(255,0,0,(((Math.floor(tSeconds*10)%10)/10)*-255)+255); //the logic to have the flashing second thing
-      circle(595,440,10)
-      circle(595,420,10)
+      strokeWeight(0)   // AC CONTROL LIGHTS
+      fill(0)
+      fill("orange")
+      rect(650+62,215,40,7,10)
+      fill(0)
+      rect(650+62*3,215,40,7,10)
+      rect(650+62*5,215,40,7,10)
+
+      fill(255)
+      rect(650+62,242,70,35,5)
+      fill(0)
+      circle(730,242,20)
+      rect(710,242,40,20)
+      fill(255)
+      rect(710,242,40,10)
+      circle(730,242,10)
+      
+      rect(695,235,20,10)
+      strokeCap(ROUND)
+      strokeWeight(5)
+      line(715,230,705,235)
+      line(715,240,705,235)
+
+      fill(255,255,255,0)
+      strokeWeight(3)
+      stroke(255)
+      rect(650+62*3,242,70,30,5)
+
+
+      fill(0)
+      strokeWeight(0)
+      rect(960,140,650,120,20) // a/c control screen
+
+      //710, 1210
+      
+      rectMode(CORNER)
+
+      textAlign(LEFT)
+
+      fill(200,0,0,(((Math.floor(tSeconds*10)%10)/10)*-255)+255); //the logic to have the flashing second thing
+      circle(595,440,7)
+      circle(595,420,7)
    }
 
 
