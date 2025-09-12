@@ -247,11 +247,12 @@ function drawEnv(){
 }
 
 function drawBackgroundCity(){
+
    
    for (i=1;i<1000;i++){
       fill(30)
       rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-100),          //x
-      (500+(i*-4.7))+(tSeconds*8.5),                                       //y
+      (600+(i*-4.7))+(tSeconds*8.5),                                       //y
       backgroundCityData[i],                                         //w
       -backgroundCityData[i+300]*3)                                      //h
       
@@ -260,12 +261,170 @@ function drawBackgroundCity(){
    for (i=1;i<1000;i++){
       fill(40)
       rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-200),           //x
-      (600+(i*-4.7))+(tSeconds*17),                                       //y
+      (600+(i*-4.4))+(tSeconds*17),                                       //y
       backgroundCityData[i],                                           //w
-      -backgroundCityData[i+300]*3)                                      //h
+      -backgroundCityData[i+300]*2)                                      //h
    }
 
 
+
+
+}
+
+function drawStars(){
+
+   for (i=1;i<10;i++){
+      circle(
+         (backgroundCityData[i]+100)*1920,
+         (backgroundCityData[i+100])*1920,
+         backgroundCityData[i]*10)
+   }
+}
+
+function drawAircon(){
+      fill(35)
+
+      circle(500,170,250)  // a/c control panel
+      circle(1420,170,250)
+      rect(500,45,920,250) 
+
+
+
+      fill(20,10,10)
+      circle(500,170,210) //left knob
+      circle(1420,170,210) //right knob
+
+
+      strokeWeight(0)
+
+      fill(40)
+      circle(500,170,180) //left knob
+      circle(1420,170,180) //right knob
+
+      fill(70,20,20)
+      
+      textAlign(CENTER)
+      textSize(40)
+      text("AUTO",500,170)       
+      text("OFF",1420,170)       
+
+      rectMode(CENTER)
+      stroke(0)
+
+      fill(50)
+      rect(960,210,620,120,20)         // AC CONTROL BUTTONS 
+      strokeWeight(3)
+      strokeCap(SQUARE)
+      //line(710,202,1210,202)
+      for (i=1;i<5;i++) {
+         strokeWeight(3)
+         line(650+124*i,200,650+124*i,270)
+      }
+      
+      strokeWeight(0)   // AC CONTROL LIGHTS
+      fill(0)
+      fill("orange")
+      rect(650+62,215,40,7,10)
+      fill(0)
+      rect(650+62*3,215,40,7,10)
+      rect(650+62*5,215,40,7,10)
+
+      fill(120,10,10)                  //recirc button
+      rect(650+62,242,70,35,5)
+
+      fill(50)
+      circle(730,242,20)
+      rect(710,242,40,20)
+
+      fill(120,10,10)
+      rect(710,242,40,15)
+      circle(730,242,15)
+      rect(695,235,20,15)
+      strokeCap(ROUND)
+      strokeWeight(3)   
+      stroke(50)
+      line(715,228,705,233)
+      line(715,238,705,233)
+
+      fill(255,255,255,0)  //recirc off
+      strokeWeight(3)
+      stroke(120,10,10)
+      rect(650+62*3,242,70,30,5)
+
+      stroke(50)
+      strokeWeight(10)
+      line(790,230,825,245)
+      stroke(120,10,10)
+      strokeWeight(3)
+      line(790,230,825,245)
+      line(825,245,850,245)
+      line(850,245,840,240)
+      line(850,245,840,250)*
+      
+      fill(255,255,255,0)  //heated windshield
+      strokeWeight(3)
+      stroke(120,10,10)
+      ellipse(650+62*5,242,60,30)
+      fill(50)
+      strokeWeight(0)
+      rect(650+62*5,250,75,25)
+
+      strokeWeight(3)
+      line(932,238,940,260)
+      line(940,260,981,260)
+      line(981,260,989,238)
+
+      line(950,265,950,240)
+      line(960,265,960,240)
+      line(970,265,970,240)
+
+
+      strokeWeight(0) //mode and ac button
+      fill(120,10,10)
+      textSize(25)
+      textAlign(CENTER)
+      text("MODE",650+62*7,250)
+      text("A/C",650+62*9,250)
+
+      fill(0)
+      strokeWeight(0)
+      rect(960,140,650,120,20) // a/c control screen
+      fill(150,0,0)
+      textSize(30)
+      text("AUTO",650+62*2,150)     //auto text
+
+      text("TEMP",650+62*4,120)     //temp section
+      stroke(150,0,0)
+      segDisplay(625+62*4,140,.8,.6,2)
+      segDisplay(655+62*4,140,.8,.6,4)
+      
+      text("MODE",650+62*6,120)     //mode section
+      strokeWeight(10)
+      line(1030,180,1038,160)
+      line(1038,160,1055,168)
+      line(1055,168,1063,149)
+      circle(1066,136,5)
+      strokeWeight(3)
+      line(1026,140  ,1045,140)
+      line(1045,140,1040,145)
+      line(1045,140,1040,135)
+
+      strokeWeight(0)
+
+      text("A/C",650+62*8,120)   //ac section
+      text("ON",650+62*8,150)
+
+}
+
+function drawRadioBg(){
+      ellipse(-100,1000,1000,3000)
+      ellipse(2020,1000,1000,3000)
+      fill(13)
+      ellipse(-120,1000,1000,3000)
+      ellipse(2040,1000,1000,3000)
+      fill(9)
+      ellipse(-140,1000,1000,3000)
+      ellipse(2060,1000,1000,3000)
 }
 
 function visBar(boundaryHi, boundaryLo, ghostArrayDrum, wValue, wInfluence) {
@@ -550,7 +709,7 @@ textSize(24);
    
    //scene switcher
 
-   if (tSeconds < -1){
+   if (tSeconds > 30 && tSeconds < 120 || tSeconds > 180){
       console.log("drawing one frame!")
 
       let boundaryHi = [640,204,1475,450] 
@@ -569,7 +728,7 @@ textSize(24);
       drawCar ON TOP
       */
 
-
+      drawStars();
       drawBackgroundCity();
       centerlineFill();
       guardrailAnim();
@@ -604,11 +763,31 @@ textSize(24);
       
       
       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       
       
       
       
-      if (tSeconds >= -1 && tSeconds < 180){
+      if (tSeconds >= -1 && tSeconds < 30 || tSeconds > 120 && tSeconds < 180){
       
 
       fill(20)
@@ -629,7 +808,7 @@ textSize(24);
       rectMode(CENTER)
 
       fill(30)
-      rect(960,700,1000,700)
+      rect(960,700,1000,700) //draws screen background
       fill(15)
       rect(960,700,980,660)
       rectMode(CORNER)
@@ -638,25 +817,19 @@ textSize(24);
       
       beginShape();vertex(boundaryHi[0]-20,boundaryHi[1]-20); vertex(1440,975);vertex(1440,boundaryLo[1]+10);vertex(boundaryLo[0]-20,boundaryLo[1]+10);endShape(CLOSE);
       
-      rect(1440,380,-540,100)
+      rect(1440,380,-540,100) //draw mini visualizer bar
       rect(480,380,400,100)
 
       fill(10);
       rect(490,390,380,80)
 
-
-      fill(255,0,0)
-
       fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*150)
       rect(1420,400, -500*Math.max(remapOther,0), 20)
       rect(1420,440, -500*remapVocal, 20)
 
-
-
       //beginShape();vertex(boundaryHi[0]-20,boundaryHi[1]-20); vertex(1440,975);vertex(1440,boundaryLo[1]+10);vertex(boundaryLo[0]-20,boundaryLo[1]+10);endShape(CLOSE);
 
       visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence)
-
 
       //segDisplay(300,408,1,0.8,Math.floor(tSeconds*10)%10);
       textSize(20)
@@ -667,156 +840,23 @@ textSize(24);
 
       fill(20,0,0)
       text("AM/FM", 860,438)
+
+      if (tSeconds > 120 && tSeconds < 180){
+         fill(150,0,0)
+      }
       text("CLOCK", 860,460)
 
+
+      //timer
+
+      
+
+
       stroke(150,0,0)
-      segDisplay(650,408,1,0.8,Math.floor(tSeconds%60)%10);
-      segDisplay(610,408,1,0.8,Math.floor((tSeconds%60)/10));
-      segDisplay(550,408,1,0.8,Math.floor((tSeconds/60)%10));
-      segDisplay(510,408,1,0.8,Math.floor((tSeconds/60)%10));  
 
 
 
-
-
-
-
-      fill(35)
-
-      circle(500,170,250)  // a/c control panel
-      circle(1420,170,250)
-      rect(500,45,920,250) 
-
-
-
-      fill(20,10,10)
-      circle(500,170,210) //left knob
-      circle(1420,170,210) //right knob
-
-
-      strokeWeight(0)
-
-      fill(40)
-      circle(500,170,180) //left knob
-      circle(1420,170,180) //right knob
-
-      fill(70,20,20)
-      
-      textAlign(CENTER)
-      textSize(40)
-      text("AUTO",500,170)       
-      text("OFF",1420,170)       
-
-      rectMode(CENTER)
-      stroke(0)
-
-      fill(50)
-      rect(960,210,620,120,20)         // AC CONTROL BUTTONS 
-      strokeWeight(3)
-      strokeCap(SQUARE)
-      //line(710,202,1210,202)
-      for (i=1;i<5;i++) {
-         strokeWeight(3)
-         line(650+124*i,200,650+124*i,270)
-      }
-      
-      strokeWeight(0)   // AC CONTROL LIGHTS
-      fill(0)
-      fill("orange")
-      rect(650+62,215,40,7,10)
-      fill(0)
-      rect(650+62*3,215,40,7,10)
-      rect(650+62*5,215,40,7,10)
-
-      fill(120,10,10)                  //recirc button
-      rect(650+62,242,70,35,5)
-
-      fill(50)
-      circle(730,242,20)
-      rect(710,242,40,20)
-
-      fill(120,10,10)
-      rect(710,242,40,15)
-      circle(730,242,15)
-      rect(695,235,20,15)
-      strokeCap(ROUND)
-      strokeWeight(3)   
-      stroke(50)
-      line(715,228,705,233)
-      line(715,238,705,233)
-
-
-
-
-
-      fill(255,255,255,0)  //recirc off
-      strokeWeight(3)
-      stroke(120,10,10)
-      rect(650+62*3,242,70,30,5)
-
-      stroke(50)
-      strokeWeight(10)
-      line(790,230,825,245)
-      stroke(120,10,10)
-      strokeWeight(3)
-      line(790,230,825,245)
-      line(825,245,850,245)
-      line(850,245,840,240)
-      line(850,245,840,250)*
-      
-      fill(255,255,255,0)  //heated windshield
-      strokeWeight(3)
-      stroke(120,10,10)
-      ellipse(650+62*5,242,60,30)
-      fill(50)
-      strokeWeight(0)
-      rect(650+62*5,250,75,25)
-
-      strokeWeight(3)
-      line(932,238,940,260)
-      line(940,260,981,260)
-      line(981,260,989,238)
-
-      line(950,265,950,240)
-      line(960,265,960,240)
-      line(970,265,970,240)
-
-
-      strokeWeight(0) //mode and ac button
-      fill(120,10,10)
-      textSize(25)
-      textAlign(CENTER)
-      text("MODE",650+62*7,250)
-      text("A/C",650+62*9,250)
-
-      fill(0)
-      strokeWeight(0)
-      rect(960,140,650,120,20) // a/c control screen
-      fill(150,0,0)
-      textSize(30)
-      text("AUTO",650+62*2,150)     //auto text
-
-      text("TEMP",650+62*4,120)     //temp section
-      stroke(150,0,0)
-      segDisplay(625+62*4,140,.8,.6,2)
-      segDisplay(655+62*4,140,.8,.6,4)
-      
-      text("MODE",650+62*6,120)     //mode section
-      strokeWeight(10)
-      line(1030,180,1038,160)
-      line(1038,160,1055,168)
-      line(1055,168,1063,149)
-      circle(1066,136,5)
-      strokeWeight(3)
-      line(1026,140  ,1045,140)
-      line(1045,140,1040,145)
-      line(1045,140,1040,135)
-
-      strokeWeight(0)
-
-      text("A/C",650+62*8,120)   //ac section
-      text("ON",650+62*8,150)
-
+      drawAircon()
 
 
       strokeWeight (0)
@@ -854,46 +894,50 @@ textSize(24);
 
       fill(17)
 
-      ellipse(-100,1000,1000,3000)
+      drawRadioBg()
 
-      ellipse(2020,1000,1000,3000)
-
-      fill(13)
-
-      ellipse(-120,1000,1000,3000)
-
-      ellipse(2040,1000,1000,3000)
-
-      fill(9)
-
-      ellipse(-140,1000,1000,3000)
-
-      ellipse(2060,1000,1000,3000)
-      
+   
       rectMode(CORNER)
 
       textAlign(LEFT)
+
+
+      fill(0,0,0,((tSeconds*-10)*10)+1000)
+      //rect(0,0,10000,10000)
+
+      fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*150)
+      rect(1420,400, -500*Math.max(remapOther,0), 20)
+      rect(1420,440, -500*remapVocal, 20)
+
+
+      if (tSeconds > 120) {
+
+         stroke(150,0,0)
+         segDisplay(650,408,1,0.8,5);
+         segDisplay(610,408,1,0.8,0);
+         segDisplay(550,408,1,0.8,3);
+         segDisplay(510,408,1,0.8,2);  
+      } else {
+         stroke(150,0,0)
+         segDisplay(650,408,1,0.8,Math.floor(tSeconds%60)%10);
+         segDisplay(610,408,1,0.8,Math.floor((tSeconds%60)/10));
+         segDisplay(550,408,1,0.8,Math.floor((tSeconds/60)%10));
+         segDisplay(510,408,1,0.8,0);  
+
+      }
+
+
 
       fill(150,0,0,(((Math.floor(tSeconds*10)%10)/10)*-255)+255); //the logic to have the flashing second thing
 
       circle(595,440,7)
       circle(595,420,7)
 
+      fill(0,0,0,((tSeconds*-10)*10)+250)
+      //rect(0,0,10000,10000)
+
 
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
