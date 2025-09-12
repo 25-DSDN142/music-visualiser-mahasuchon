@@ -9,6 +9,8 @@ let boundaryBR = [100,800];
 let boundaryHi = [];
 let boundaryLo = [];
 
+let transitionTransparency = 0;
+
 //let boundaryHi = [640,204,1475,450] //in X1,Y1,X2,Y2. This defines the top half of the box. 1-numbered points determine the top left of the box, 2-numbered points determine top right
 //let boundaryLo = [660,820,1475,640] //in X3,Y3,X4,Y4. This defines the bottom half of the box. 3-numbered points determine bottom left, 4-numbered points determine bottom right
 
@@ -28,6 +30,8 @@ let speedLinesLocation = []
 let speedLinesCount = 20;
 
 let backgroundCityData = []
+
+let starCityData = []
 
 let altVisBarShiftX;
 
@@ -57,6 +61,19 @@ let firstrun = true;
 let shota;
 let shotb;
 let shotc;
+
+function fadeOut(t){          //WHERE T IS THE TIME YOU WANT THE TRANSITION TO COME INTO FX
+   let transitionTransparency = (tSeconds-t)*255
+   fill(0,0,0,transitionTransparency)
+   rect(0,0,2000,2000)
+   //let transitionTransparency = (tSeconds-t)*255
+}
+
+function fadeIn(t){
+   let transitionTransparency = ((tSeconds-t)*255)*-1
+   fill(0,0,0,transitionTransparency)
+   rect(0,0,2000,2000)
+}
 
 function speedLines(){
    
@@ -271,14 +288,17 @@ function drawBackgroundCity(){
 
 }
 
-function drawStars(){
+function drawStars(n){ //N IS THE NUM OF STARS
+   fill(150)
 
-   for (i=1;i<10;i++){
+   for (i=1;i<n;i++){
       circle(
-         (backgroundCityData[i]+100)*1920,
-         (backgroundCityData[i+100])*1920,
-         backgroundCityData[i]*10)
-   }
+      starCityData[i]*1920,
+      starCityData[i+100]*300,
+      //starCityData[i]*10)
+      starCityData[i+200]*10)
+   }  
+
 }
 
 function drawAircon(){
@@ -702,6 +722,9 @@ textSize(24);
       for (i=1;i<1000;i++){                                 //generates a thousand lines of random numbers that can be used for making a city
          backgroundCityData.push(50+(Math.random()*50))
          console.log(backgroundCityData)
+
+         starCityData.push(Math.random())
+
       }
    }
 
@@ -728,12 +751,40 @@ textSize(24);
       drawCar ON TOP
       */
 
-      drawStars();
-      drawBackgroundCity();
+      drawStars(10);
+
+      if (tSeconds < 180) {
+         drawBackgroundCity();
+      } else {
+         drawStars(30);
+
+         fill(200)
+         circle(436,210,40)
+         fill(50)
+         circle(430,390,40)
+         fill(5)
+         circle(456,210,40)
+         circle(450,390,40)
+
+
+         rectMode(CORNER);
+         fill(0,0,50,50)
+         rect(0,350  ,1920,1080)
+         rect(0,400,1920,1080)
+         rect(0,450,1920,1080)
+
+      }
+      
       centerlineFill();
       guardrailAnim();
-      yellowlineAnim();
-      //whitelineAnim();
+
+      if (tSeconds < 120){
+         yellowlineAnim();
+      }  else {
+         whitelineAnim();
+      }
+      
+      //
       drawEnv()
       altVisBar(0,0,remapOther)
       altVisBar(200,50,remapVocal,-10,-50)
@@ -743,11 +794,24 @@ textSize(24);
       image(shota, 0, 0);
       fill(128)
       text("scene 1, shot a showroom lights off", 50, 100)
-      fill(255,0,0)
-      
+      fill(200)
+
+
       text(mouseX + ", " + mouseY, 50, 200)
       
       visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence)
+
+      if (tSeconds < 40){
+         fadeIn(31)
+      }
+
+      if (tSeconds < 123){
+         fadeOut(119)
+      }
+      
+      if (tSeconds > 180){
+         fadeIn(181)         
+      }
 
    } else 
       
@@ -774,6 +838,72 @@ textSize(24);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
 
 
@@ -903,7 +1033,7 @@ textSize(24);
 
 
       fill(0,0,0,((tSeconds*-10)*10)+1000)
-      //rect(0,0,10000,10000)
+      rect(0,0,10000,10000)
 
       fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*150)
       rect(1420,400, -500*Math.max(remapOther,0), 20)
@@ -934,7 +1064,23 @@ textSize(24);
       circle(595,420,7)
 
       fill(0,0,0,((tSeconds*-10)*10)+250)
-      //rect(0,0,10000,10000)
+      rect(0,0,10000,10000)
+
+      if (tSeconds <  30){
+         fadeOut(29)         
+      }
+
+
+      if (tSeconds > 120){
+         fadeIn(121)
+         
+      }
+
+      if (tSeconds < 180){
+         fadeOut(179)
+      }
+      
+
 
 
    }
