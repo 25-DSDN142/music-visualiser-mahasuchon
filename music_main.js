@@ -23,38 +23,38 @@ let guardrailOffset = 0;
 
 let centerlineOffset = 0;
 
-let speedLinesLife = []
+let speedLinesLife = [];
 
-let speedLinesLocation = []
+let speedLinesLocation = [];
 
 let speedLinesCount = 20;
 
-let backgroundCityData = []
+let backgroundCityData = [];
 
-let starCityData = []
+let starCityData = [];
 
 let altVisBarShiftX;
 
 let altVisBarShiftY;
 
 for (i=0;i<speedLinesCount;i++){
-   speedLinesLife[i] = Math.random()*2
+   speedLinesLife[i] = Math.random()*2;
    //i*1/speedLinesCount
    
 }
 
 for (i=0;i<speedLinesLocation;i++){
    speedLinesLocation[i] = //Math.random()
-   i*1/speedLinesCount
+   i*1/speedLinesCount;
 }
 
-let ghostArrayBass = []
-let ghostArrayDrum = []
-let ghostArrayOther = []
+let ghostArrayBass = [];
+let ghostArrayDrum = [];
+let ghostArrayOther = [];
 
 let tSeconds;
 
-let rainArray = []
+let rainArray = [];
 
 let firstrun = true;
 
@@ -63,16 +63,16 @@ let shotb;
 let shotc;
 
 function fadeOut(t){          //WHERE T IS THE TIME YOU WANT THE TRANSITION TO COME INTO FX
-   let transitionTransparency = (tSeconds-t)*255
-   fill(0,0,0,transitionTransparency)
-   rect(0,0,2000,2000)
+   let transitionTransparency = (tSeconds-t)*255;
+   fill(0,0,0,transitionTransparency);
+   rect(0,0,2000,2000);
    //let transitionTransparency = (tSeconds-t)*255
 }
 
 function fadeIn(t){
-   let transitionTransparency = ((tSeconds-t)*255)*-1
-   fill(0,0,0,transitionTransparency)
-   rect(0,0,2000,2000)
+   let transitionTransparency = ((tSeconds-t)*255)*-1;
+   fill(0,0,0,transitionTransparency);
+   rect(0,0,2000,2000);
 }
 
 function speedLines(){
@@ -80,93 +80,87 @@ function speedLines(){
    if (tSeconds > 1){
       strokeWeight(3);
       stroke(120);
-      color(30)
+      color(30);
       for (i=0;i<speedLinesCount;i++){
       
       //let location of speed line = speedLineLife[i]. so,
-
       stroke(60,60,60,speedLinesLife[i]*255)
 
       //speedlineslife determines the life of that speedline
       //speedlineslocation determines how spread out it is
-
       line( 
          (1920+(speedLinesLife[i]*-1000))-speedLinesLocation[i]*1000, 
          600-(speedLinesLife[i]*-(250-(speedLinesLocation[i])*150)), 
          (1970+(speedLinesLife[i]*-1000))-speedLinesLocation[i]*1000,
          590-(speedLinesLife[i]*-(250-(speedLinesLocation[i])*150))
-      )
+      );
       
-      speedLinesLife[i] = speedLinesLife[i] + 0.03
+      speedLinesLife[i] = speedLinesLife[i] + 0.03;
 
       if (speedLinesLife[i] > 1.8){
-         speedLinesLife[i] = 0
-         speedLinesLocation[i] = Math.random()
+         speedLinesLife[i] = 0;
+         speedLinesLocation[i] = Math.random();
       }
    }
-
    strokeWeight(0);
    }
-
-
 }
 
 function guardrailAnim(){
-   fill(50,50,50,255)
+   fill(50,50,50,255);
    rect(    //uses powers to give an illusion of perspective. aka when its "far away", it moves on the screen slower, but when its "closer", it moves on the screen faster.
       2200-((guardrailOffset*40)**2.2),
       380-(guardrailOffset*-105),
       30+(guardrailOffset*90),
       120+(guardrailOffset*130)
-   ) 
+   ) ;
    if (tSeconds == 0){
       guardrailOffset = 0;
    } else {
-      guardrailOffset = guardrailOffset + 0.01
-      if (guardrailOffset > 1 || guardrailOffset < 0.3)
+      guardrailOffset = guardrailOffset + 0.01;
+      if (guardrailOffset > 1 || guardrailOffset < 0.3);
          guardrailOffset = 0.3;
    }
    //console.log(guardrailOffset)
 }
 
 function whitelineAnim(){
-   fill(200,200,200,255)
+   fill(200,200,200,255);
    rect(
       2200-((centerlineOffset*40)**2.3),
       150-(centerlineOffset*-1000),
       500+(centerlineOffset*1500),
       30+(centerlineOffset*90)
-   )
+   );
    if (tSeconds == 0){
       centerlineOffset = 0.1;
    } else {
-      centerlineOffset = centerlineOffset + 0.02
+      centerlineOffset = centerlineOffset + 0.02;
       if (centerlineOffset > 1 || centerlineOffset < 0)
          centerlineOffset = 0;
    }
 }
 
 function yellowlineAnim(){
-
    if (tSeconds == 0){
       centerlineOffset = 0.1;
-      fill(155,155,0,255)
+      fill(155,155,0,255);
       beginShape();
-      vertex(1920,381)
-      vertex(1920,566)
-      vertex((2200-((centerlineOffset*40)**2.3)),(150-(centerlineOffset*-1000)))
-      vertex((2200-((centerlineOffset*40)**2.3))+(centerlineOffset*50)**2,(150-(centerlineOffset*-1000)))
+      vertex(1920,381);
+      vertex(1920,566);
+      vertex((2200-((centerlineOffset*40)**2.3)),(150-(centerlineOffset*-1000)));
+      vertex((2200-((centerlineOffset*40)**2.3))+(centerlineOffset*50)**2,(150-(centerlineOffset*-1000)));
       endShape(CLOSE);
    } else {
       if (centerlineOffset < 1){
-         centerlineOffset = centerlineOffset + 0.01
-         fill(155,155,0,255)
+         centerlineOffset = centerlineOffset + 0.01;
+         fill(155,155,0,255);
          beginShape();
-         vertex(1920,600)
-         vertex(1920,500)
+         vertex(1920,600);
+         vertex(1920,500);
 
-         vertex((2200-((centerlineOffset*40)**2.3)),(150-(centerlineOffset*-1000)))
-         vertex((2200-((centerlineOffset*40)**2.3))+(centerlineOffset*50)**2,(150-(centerlineOffset*-1000)))
+         vertex((2200-((centerlineOffset*40)**2.3)),(150-(centerlineOffset*-1000)));
+         vertex((2200-((centerlineOffset*40)**2.3))+(centerlineOffset*50)**2,(150-(centerlineOffset*-1000)));
          endShape(CLOSE);
       } else {
          fill(155,155,0,255);
@@ -177,9 +171,6 @@ function yellowlineAnim(){
          vertex(0,1029);
          endShape(CLOSE); 
       }
-
-      //if (centerlineOffset > 1 || centerlineOffset < 0)
-         //centerlineOffset = 0;
    }
 }
 
@@ -235,7 +226,7 @@ function drawEnv(){
    //vertex(396,1080); 
    vertex(1920,1080)
    vertex(0,1080);
-   vertex(0,1068)
+   vertex(0,1068);
    endShape(CLOSE);
 
    fill(50);
@@ -264,28 +255,22 @@ function drawEnv(){
 }
 
 function drawBackgroundCity(){
-
-   
    for (i=1;i<1000;i++){
-      fill(30)
+      fill(30);
       rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-100),          //x
       (600+(i*-4.7))+(tSeconds*8.5),                                       //y
       backgroundCityData[i],                                         //w
-      -backgroundCityData[i+300]*3)                                      //h
+      -backgroundCityData[i+300]*3);                                      //h
       
 
    }
    for (i=1;i<1000;i++){
-      fill(40)
+      fill(40);
       rect((i*50)+(backgroundCityData[i+100])+(tSeconds*-200),           //x
       (600+(i*-4.4))+(tSeconds*17),                                       //y
       backgroundCityData[i],                                           //w
-      -backgroundCityData[i+300]*2)                                      //h
+      -backgroundCityData[i+300]*2);                                      //h
    }
-
-
-
-
 }
 
 function drawStars(n){ //N IS THE NUM OF STARS
@@ -296,155 +281,147 @@ function drawStars(n){ //N IS THE NUM OF STARS
       starCityData[i]*1920,
       starCityData[i+100]*300,
       //starCityData[i]*10)
-      starCityData[i+200]*10)
+      starCityData[i+200]*10);
    }  
-
 }
 
 function drawAircon(){
-      fill(35)
+      fill(35);
 
-      circle(500,170,250)  // a/c control panel
-      circle(1420,170,250)
-      rect(500,45,920,250) 
+      circle(500,170,250);  // a/c control panel
+      circle(1420,170,250);
+      rect(500,45,920,250); 
 
-
-
-      fill(20,10,10)
-      circle(500,170,210) //left knob
-      circle(1420,170,210) //right knob
-
+      fill(20,10,10);
+      circle(500,170,210); //left knob
+      circle(1420,170,210); //right knob
 
       strokeWeight(0)
 
-      fill(40)
-      circle(500,170,180) //left knob
-      circle(1420,170,180) //right knob
+      fill(40);
+      circle(500,170,180); //left knob
+      circle(1420,170,180); //right knob
 
-      fill(70,20,20)
+      fill(70,20,20);
       
-      textAlign(CENTER)
-      textSize(40)
-      text("AUTO",500,170)       
-      text("OFF",1420,170)       
+      textAlign(CENTER);
+      textSize(40);
+      text("AUTO",500,170);     
+      text("OFF",1420,170);    
 
-      rectMode(CENTER)
-      stroke(0)
+      rectMode(CENTER);
+      stroke(0);
 
-      fill(50)
-      rect(960,210,620,120,20)         // AC CONTROL BUTTONS 
-      strokeWeight(3)
-      strokeCap(SQUARE)
+      fill(50);
+      rect(960,210,620,120,20);         // AC CONTROL BUTTONS 
+      strokeWeight(3);
+      strokeCap(SQUARE);
       //line(710,202,1210,202)
       for (i=1;i<5;i++) {
-         strokeWeight(3)
-         line(650+124*i,200,650+124*i,270)
+         strokeWeight(3);
+         line(650+124*i,200,650+124*i,270);
       }
       
-      strokeWeight(0)   // AC CONTROL LIGHTS
-      fill(0)
-      fill("orange")
-      rect(650+62,215,40,7,10)
-      fill(0)
-      rect(650+62*3,215,40,7,10)
-      rect(650+62*5,215,40,7,10)
+      strokeWeight(0);   // AC CONTROL LIGHTS
+      fill(0);
+      fill("orange");
+      rect(650+62,215,40,7,10);
+      fill(0);
+      rect(650+62*3,215,40,7,10);
+      rect(650+62*5,215,40,7,10);
 
-      fill(120,10,10)                  //recirc button
-      rect(650+62,242,70,35,5)
+      fill(120,10,10);                  //recirc button
+      rect(650+62,242,70,35,5);
+      fill(50);
+      circle(730,242,20);
+      rect(710,242,40,20);
+      fill(120,10,10);
+      rect(710,242,40,15);
+      circle(730,242,15);
+      rect(695,235,20,15);
+      strokeCap(ROUND);
+      strokeWeight(3); 
+      stroke(50);
+      line(715,228,705,233);
+      line(715,238,705,233);
 
-      fill(50)
-      circle(730,242,20)
-      rect(710,242,40,20)
-
-      fill(120,10,10)
-      rect(710,242,40,15)
-      circle(730,242,15)
-      rect(695,235,20,15)
-      strokeCap(ROUND)
-      strokeWeight(3)   
-      stroke(50)
-      line(715,228,705,233)
-      line(715,238,705,233)
-
-      fill(255,255,255,0)  //recirc off
-      strokeWeight(3)
-      stroke(120,10,10)
-      rect(650+62*3,242,70,30,5)
-
-      stroke(50)
-      strokeWeight(10)
-      line(790,230,825,245)
-      stroke(120,10,10)
-      strokeWeight(3)
-      line(790,230,825,245)
-      line(825,245,850,245)
-      line(850,245,840,240)
-      line(850,245,840,250)*
+      fill(255,255,255,0);  //recirc off
+      strokeWeight(3);
+      stroke(120,10,10);
+      rect(650+62*3,242,70,30,5);
+      stroke(50);
+      strokeWeight(10);
+      line(790,230,825,245);
+      stroke(120,10,10);
+      strokeWeight(3);
+      line(790,230,825,245);
+      line(825,245,850,245);
+      line(850,245,840,240);
+      line(850,245,840,250);
       
-      fill(255,255,255,0)  //heated windshield
-      strokeWeight(3)
-      stroke(120,10,10)
-      ellipse(650+62*5,242,60,30)
-      fill(50)
-      strokeWeight(0)
-      rect(650+62*5,250,75,25)
+      fill(255,255,255,0);  //heated windshield
+      strokeWeight(3);
+      stroke(120,10,10);
+      ellipse(650+62*5,242,60,30);
+      fill(50);
+      strokeWeight(0);
+      rect(650+62*5,250,75,25);
 
-      strokeWeight(3)
-      line(932,238,940,260)
-      line(940,260,981,260)
-      line(981,260,989,238)
+      strokeWeight(3);
+      line(932,238,940,260);
+      line(940,260,981,260);
+      line(981,260,989,238);
 
-      line(950,265,950,240)
-      line(960,265,960,240)
-      line(970,265,970,240)
+      line(950,265,950,240);
+      line(960,265,960,240);
+      line(970,265,970,240);
 
 
-      strokeWeight(0) //mode and ac button
-      fill(120,10,10)
-      textSize(25)
-      textAlign(CENTER)
-      text("MODE",650+62*7,250)
-      text("A/C",650+62*9,250)
+      strokeWeight(0); //mode and ac button
+      fill(120,10,10);
+      textSize(25);
+      textAlign(CENTER);
+      text("MODE",650+62*7,250);
+      text("A/C",650+62*9,250);
 
-      fill(0)
-      strokeWeight(0)
-      rect(960,140,650,120,20) // a/c control screen
-      fill(150,0,0)
-      textSize(30)
-      text("AUTO",650+62*2,150)     //auto text
+      fill(0);
+      strokeWeight(0);
+      rect(960,140,650,120,20); // a/c control screen
+      fill(150,0,0);
+      textSize(30);
+      text("AUTO",650+62*2,150);     //auto text
 
-      text("TEMP",650+62*4,120)     //temp section
-      stroke(150,0,0)
-      segDisplay(625+62*4,140,.8,.6,2)
-      segDisplay(655+62*4,140,.8,.6,4)
+      text("TEMP",650+62*4,120);     //temp section
+      stroke(150,0,0);
+      segDisplay(625+62*4,140,.8,.6,2);
+      segDisplay(655+62*4,140,.8,.6,4);
       
-      text("MODE",650+62*6,120)     //mode section
-      strokeWeight(10)
-      line(1030,180,1038,160)
-      line(1038,160,1055,168)
-      line(1055,168,1063,149)
-      circle(1066,136,5)
-      strokeWeight(3)
-      line(1026,140  ,1045,140)
-      line(1045,140,1040,145)
-      line(1045,140,1040,135)
+      text("MODE",650+62*6,120);     //mode section
+      strokeWeight(10);
+      line(1030,180,1038,160);
+      line(1038,160,1055,168);
+      line(1055,168,1063,149);
+      circle(1066,136,5);
+      strokeWeight(3);
+      line(1026,140,1045,140);
+      line(1045,140,1040,145);
+      line(1045,140,1040,135);
 
-      strokeWeight(0)
+      strokeWeight(0);
 
-      text("A/C",650+62*8,120)   //ac section
-      text("ON",650+62*8,150)
-
+      text("A/C",650+62*8,120);   //ac section
+      text("ON",650+62*8,150);
 }
 
 function drawRadioBg(){
-      ellipse(-100,1000,1000,3000)
-      ellipse(2020,1000,1000,3000)
-      fill(13)
-      ellipse(-120,1000,1000,3000)
-      ellipse(2040,1000,1000,3000)
-      fill(9)
-      ellipse(-140,1000,1000,3000)
-      ellipse(2060,1000,1000,3000)
+      ellipse(-100,1000,1000,3000);
+      ellipse(2020,1000,1000,3000);
+      fill(13);
+      ellipse(-120,1000,1000,3000);
+      ellipse(2040,1000,1000,3000);
+      fill(9);
+      ellipse(-140,1000,1000,3000);
+      ellipse(2060,1000,1000,3000);
 }
 
 function visBar(boundaryHi, boundaryLo, ghostArrayDrum, wValue, wInfluence) {
@@ -453,30 +430,28 @@ function visBar(boundaryHi, boundaryLo, ghostArrayDrum, wValue, wInfluence) {
       fill(0,255,0,5); //This fills in the boundaries. used for testing
       //beginShape();vertex(boundaryHi[0],boundaryHi[1]); vertex(boundaryHi[2],boundaryHi[3]);vertex(boundaryLo[2],boundaryLo[3]);vertex(boundaryLo[0],boundaryLo[1]);endShape(CLOSE);
       
-      fill(200,0,0,0+50+30+((ghostArrayDrum[(ghostArrayDrum.length)-(i)])*170)) // <- colour here!
+      fill(200,0,0,0+50+30+((ghostArrayDrum[(ghostArrayDrum.length)-(i)])*170)); // <- colour here!
       strokeWeight(0);
 
       //ghostArrayBass[(ghostArrayBass.length)-(i)] <- find volume values here
-
-
 
       p = (i-1)/10; //how far along the line you want to be, controlled by i. if you want to change how many lines FIT within the boundaries, change this value
       w = wValue-(i*wInfluence); // how wide you want each bar to be
 
 
-      let vertBLX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p //BL -> Bottom Left, X -> X axis
-      let vertBLY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*p
+      let vertBLX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*p; //BL -> Bottom Left, X -> X axis
+      let vertBLY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*p;
 
-      let vertBRX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w)
-      let vertBRY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w)
+      let vertBRX = boundaryLo[0]+(boundaryLo[2]-boundaryLo[0])*(p+w);
+      let vertBRY = boundaryLo[1]+(boundaryLo[3]-boundaryLo[1])*(p+w);
 
-      let vertTRX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w)
-      let vertTRY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w)
+      let vertTRX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*(p+w);
+      let vertTRY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*(p+w);
 
-      let vertTLX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*p
-      let vertTLY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p
+      let vertTLX = boundaryHi[0]+(boundaryHi[2]-boundaryHi[0])*p;
+      let vertTLY = boundaryHi[1]+(boundaryHi[3]-boundaryHi[1])*p;
 
-      beginShape()
+      beginShape();
       vertex( //THIS IS THE TOP RIGHT CORNER
          Math.min(
             (
@@ -519,10 +494,7 @@ function visBar(boundaryHi, boundaryLo, ghostArrayDrum, wValue, wInfluence) {
          )
       );
 
-      endShape(CLOSE)
-
-      line()
-
+      endShape(CLOSE);
    }
 }
 
@@ -544,7 +516,7 @@ function altVisBar(x,y,z,o,p){ //X and Y are respective offsets. Z is var that i
       p = 0
    }
 
-   fill(255,0,0,100+(z-0.5)*155)
+   fill(255,0,0,100+(z-0.5)*155);
 
    beginShape();
    vertex(894 + x,885 + y); //bottom left 894 885
@@ -552,11 +524,11 @@ function altVisBar(x,y,z,o,p){ //X and Y are respective offsets. Z is var that i
    vertex(
       ((974 + ((1743+p) - 974) * z) + x+0 - 0),
       ((904 + ((663 + o)-904) * z) + y+0 - 0)
-   )
+   );
    vertex(
       ((894 + ((1690+p) - 894)*z) + x+0 - 0),
       ((885 + ((649 + o)-885)*z) + y+0 - 0)
-   )
+   );
    //vertex(1743,663); //top right
    //vertex(1690,649); //top left
    endShape(CLOSE);
@@ -585,14 +557,10 @@ function segDisplay(x,y,a,b,n) { //X and Y are offsets, A and B are x/y scaling,
       b = 1
    }
 
-
-
    push();
    translate(x-10,y-10);
    scale(a,b)
    strokeWeight(4);
-
-
 
    /*
    line(10,10,10,35); //TL vert
@@ -702,41 +670,39 @@ textFont("Courier New"); // please use CSS safe fonts
 //rectMode(CENTER)
 textSize(24);
 
-
-
-
    //for 2nd visualizer
 
-   remapBass = map(bass,50,100,0,1)
-   remapVocal = map(vocal,0,100,0,1)
-   remapDrum = map(drum,50,100,0,1)
-   remapOther = map(other,50,100,0,1)
+   remapBass = map(bass,50,100,0,1);
+
+   //if(tSeconds >= -1 && tSeconds < 30 || tSeconds > 120 && tSeconds < 180){
+      
+   remapVocal = map(vocal,0,100,0,1);
+   remapDrum = map(drum,50,100,0,1);
+   remapOther = map(other,50,100,0,1);
 
    if(firstrun){
-      shota = loadImage('assets/shota.png')
-      shotb = loadImage('assets/shotb.png')
-      shotc = loadImage('assets/shotc.jpg')
-      console.log(speedLinesLife)
+      shota = loadImage('assets/shota.png');
+      shotb = loadImage('assets/shotb.png');
+      shotc = loadImage('assets/shotc.jpg');
+      console.log(speedLinesLife);
       firstrun = false;
 
-      for (i=1;i<1000;i++){                                 //generates a thousand lines of random numbers that can be used for making a city
-         backgroundCityData.push(50+(Math.random()*50))
-         console.log(backgroundCityData)
-
-         starCityData.push(Math.random())
-
+      for (i=1;i<1000;i++){                                 //generates a thousand lines of random numbers that can be used for random data
+         backgroundCityData.push(50+(Math.random()*50));
+         console.log(backgroundCityData);
+         starCityData.push(Math.random());
       }
    }
 
-   tSeconds = round(counter/60,5)
+   tSeconds = round(counter/60,5);
    
    //scene switcher
 
    if (tSeconds > 30 && tSeconds < 120 || tSeconds > 180){
       console.log("drawing one frame!")
 
-      let boundaryHi = [640,204,1475,450] 
-      let boundaryLo = [660,820,1475,640]
+      let boundaryHi = [640,204,1475,450];
+      let boundaryLo = [660,820,1475,640];
 
       let wValue = 0.08;      //Changes width of visualizer bars
       let wInfluence = 0.003; //Changes influence of i. Basically determines how thick each visualizer bar is
@@ -785,264 +751,148 @@ textSize(24);
       }
       
       //
-      drawEnv()
-      altVisBar(0,0,remapOther)
-      altVisBar(200,50,remapVocal,-10,-50)
-      altVisBar(100,25,remapBass, -5, -25)
+      drawEnv();
+      altVisBar(0,0,remapOther);
+      altVisBar(200,50,remapVocal,-10,-50);
+      altVisBar(100,25,remapBass, -5, -25);
       speedLines();
       drawCarShadow();
       image(shota, 0, 0);
-      fill(128)
-      text("scene 1, shot a showroom lights off", 50, 100)
-      fill(200)
+      fill(128);
+      //text("scene 1, shot a showroom lights off", 50, 100);
+      fill(200);
 
 
-      text(mouseX + ", " + mouseY, 50, 200)
+      //text(mouseX + ", " + mouseY, 50, 200);
       
-      visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence)
+      visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence);
 
       if (tSeconds < 40){
-         fadeIn(31)
+         fadeIn(31);
       }
 
       if (tSeconds < 123){
-         fadeOut(119)
+         fadeOut(119);
       }
       
       if (tSeconds > 180){
-         fadeIn(181)         
+         fadeIn(181)  ;       
       }
 
    } else 
+   if (tSeconds >= -1 && tSeconds < 30 || tSeconds > 120 && tSeconds < 180){
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
-
-
-      
-      
-      
-      
-      if (tSeconds >= -1 && tSeconds < 30 || tSeconds > 120 && tSeconds < 180){
-      
-
-      fill(20)
-      rect(0,0,1920,1080)
-
+      fill(20);
+      rect(0,0,1920,1080);
 
       let wValue = 0.08;      //Changes width of visualizer bars
       let wInfluence = 0.000; //Changes influence of i. Basically determines how thick each visualizer bar is
 
-      let boundaryHi = [500,600,1280,920]
-      let boundaryLo = [500,1000,1280,1000]
+      let boundaryHi = [500,600,1280,920];
+      let boundaryLo = [500,1000,1280,1000];
 
-      fill(255)
+      fill(255);
       
       //image(shota,0,0);
-      text("scene 2, shot a showroom lights on", 50, 100)
-      text(mouseX + ", " + mouseY, 50, 200)
-      rectMode(CENTER)
+      //text("scene 2, shot a showroom lights on", 50, 100)
+      //text(mouseX + ", " + mouseY, 50, 200)
+      rectMode(CENTER);
 
-      fill(30)
-      rect(960,700,1000,700) //draws screen background
-      fill(15)
-      rect(960,700,980,660)
-      rectMode(CORNER)
+      fill(30);
+      rect(960,700,1000,700); //draws screen background
+      fill(15);
+      rect(960,700,980,660);
+      rectMode(CORNER);
       
       fill(10);
       
       beginShape();vertex(boundaryHi[0]-20,boundaryHi[1]-20); vertex(1440,975);vertex(1440,boundaryLo[1]+10);vertex(boundaryLo[0]-20,boundaryLo[1]+10);endShape(CLOSE);
       
-      rect(1440,380,-540,100) //draw mini visualizer bar
-      rect(480,380,400,100)
+      rect(1440,380,-540,100); //draw mini visualizer bar
+      rect(480,380,400,100);
 
       fill(10);
-      rect(490,390,380,80)
+      rect(490,390,380,80);
 
-      fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*150)
-      rect(1420,400, -500*Math.max(remapOther,0), 20)
-      rect(1420,440, -500*remapVocal, 20)
+      fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*150);
+      rect(1420,400, -500*Math.max(remapOther,0), 20);
+      rect(1420,440, -500*remapVocal, 20);
 
       //beginShape();vertex(boundaryHi[0]-20,boundaryHi[1]-20); vertex(1440,975);vertex(1440,boundaryLo[1]+10);vertex(boundaryLo[0]-20,boundaryLo[1]+10);endShape(CLOSE);
 
-      visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence)
+      visBar(boundaryHi,boundaryLo,ghostArrayDrum, wValue, wInfluence);
 
       //segDisplay(300,408,1,0.8,Math.floor(tSeconds*10)%10);
-      textSize(20)
-      textAlign(RIGHT)
-      textFont("Courier New")
-      fill(150,0,0)
-      text("AUX/BT", 860,415)
+      textSize(20);
+      textAlign(RIGHT);
+      textFont("Courier New");
+      fill(150,0,0);
+      text("AUX/BT", 860,415);
 
-      fill(20,0,0)
-      text("AM/FM", 860,438)
+      fill(20,0,0);
+      text("AM/FM", 860,438);
 
       if (tSeconds > 120 && tSeconds < 180){
-         fill(150,0,0)
+         fill(150,0,0);
       }
-      text("CLOCK", 860,460)
-
+      text("CLOCK", 860,460);
 
       //timer
 
+      stroke(150,0,0);
+
+      drawAircon();
+
+      strokeWeight(0);
+      fill(5);
+      rectMode(CENTER);
+
+      rect(1320,620,220,220,20);
+
+      fill(150,0,0);
       
-
-
-      stroke(150,0,0)
-
-
-
-      drawAircon()
-
-
-      strokeWeight (0)
-      fill(5)
-      rectMode(CENTER)
-
-      rect(1320,620,220,220,20)
-
-      fill(150,0,0)
-      
-      circle(1320,620,200)
-      fill(20)
-      circle(1320,620,190)
-      fill(150,0,0)
-      text("PAUSE",1320,600)
-      text("NEXT",1320,630)
-      text("PREV",1320,660)
+      circle(1320,620,200);
+      fill(20);
+      circle(1320,620,190);
+      fill(150,0,0);
+      text("PAUSE",1320,600);
+      text("NEXT",1320,630);
+      text("PREV",1320,660);
       for (i=1;i<5;i++){
-         fill(150,0,0)
-         rect(700 + 110*i,620,100,40)
-         fill(20)
-         rect(700 + 110*i,620,95,35)
+         fill(150,0,0);
+         rect(700 + 110*i,620,100,40);
+         fill(20);
+         rect(700 + 110*i,620,95,35);
       }
-      fill(150,0,0)
-      textSize(20)   
-      text("EJECT",700+110,625)
-      text("POWER",700+110*2,625)
-      text("MUTE",700+110*3,625)
-      text("MODE",700+110*4,625)
-      rect(850,550,680,30)
-      fill(20)
-      rect(850,550,675,25)
+      fill(150,0,0);
+      textSize(20)   ;
+      text("EJECT",700+110,625);
+      text("POWER",700+110*2,625);
+      text("MUTE",700+110*3,625);
+      text("MODE",700+110*4,625);
+      rect(850,550,680,30);
+      fill(20);
+      rect(850,550,675,25);
 
       //710, 1210
 
-      fill(17)
+      fill(17);
 
-      drawRadioBg()
+      drawRadioBg();
 
-   
-      rectMode(CORNER)
+      rectMode(CORNER);
+      textAlign(LEFT);
 
-      textAlign(LEFT)
+      fill(0,0,0,((tSeconds*-10)*10)+1000);
+      rect(0,0,10000,10000);
 
-
-      fill(0,0,0,((tSeconds*-10)*10)+1000)
-      rect(0,0,10000,10000)
-
-      fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*150)
-      rect(1420,400, -500*Math.max(remapOther,0), 20)
-      rect(1420,440, -500*remapVocal, 20)
-
+      fill(255,0,0,Math.max((remapDrum+remapBass),0.5)*150);
+      rect(1420,400, -500*Math.max(remapOther,0), 20);
+      rect(1420,440, -500*remapVocal, 20);
 
       if (tSeconds > 120) {
 
-         stroke(150,0,0)
+         stroke(150,0,0);
          segDisplay(650,408,1,0.8,5);
          segDisplay(610,408,1,0.8,0);
          segDisplay(550,408,1,0.8,3);
@@ -1056,80 +906,29 @@ textSize(24);
 
       }
 
-
-
       fill(150,0,0,(((Math.floor(tSeconds*10)%10)/10)*-255)+255); //the logic to have the flashing second thing
 
-      circle(595,440,7)
-      circle(595,420,7)
+      circle(595,440,7);
+      circle(595,420,7);
 
-      fill(0,0,0,((tSeconds*-10)*10)+250)
-      rect(0,0,10000,10000)
+      fill(0,0,0,((tSeconds*-10)*10)+250);
+      rect(0,0,10000,10000);
 
       if (tSeconds <  30){
-         fadeOut(29)         
+         fadeOut(29);       
       }
 
-
       if (tSeconds > 120){
-         fadeIn(121)
+         fadeIn(121);
          
       }
 
       if (tSeconds < 180){
-         fadeOut(179)
+         fadeOut(179);
       }
-      
-
-
-
    }
-
-
-
-
-
-
-
-
-
-   /*} else if (tSeconds >= 30 && tSeconds < 44.7){
-      image(shota,0,0)
-      text("scene 3, shot a overcast", 50, 100)
-
-   } else if (tSeconds >= 44.7 && tSeconds < 59.5){
-      image(shotb,0,0)
-      text("scene 4, shot b raining", 50, 100)
-
-   } else if (tSeconds >= 59.5 && tSeconds < 74.3){   
-      image(shotb,0,0)
-      text("scene 5, shot b snowing",50,100)
-
-   } else if (tSeconds >= 74.3 && tSeconds < 89.1){
-      image(shotc,0,0)
-      text("scene 6, shot c snowing",50,100)
-
-   } else if (tSeconds >= 89.1 && tSeconds < 118.5){
-      image(shotc,0,0)
-      text("scene 7, shot c raining",50,100)
-   } else if (tSeconds >=118.5 && tSeconds < 125.9){
-      image(shota,0,0)
-      text("scene 8, shot a tunnel",50,100)
-   } else if (tSeconds >= 125.9){
-      image(shota,0,0)
-      text("scene 9, shot a overcast",50,100)
-   }*/
-
-   text(tSeconds + " seconds elapsed", 50, 50)
-
-
+   //text(tSeconds + " seconds elapsed", 50, 50)
    ghostArrayBass.push(remapBass)
    ghostArrayDrum.push(remapDrum)
    ghostArrayOther.push(remapOther)
-
-
-
-}        
-
-
-
+}
